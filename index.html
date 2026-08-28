@@ -4,23 +4,91 @@
 <title>gv — GitVerse из командной строки</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  body { max-width: 46rem; margin: 3rem auto; padding: 0 1rem;
-         font: 16px/1.6 system-ui, sans-serif; color: #1a1a1a; }
-  code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-  pre { background: #f5f5f5; padding: .8rem 1rem; overflow-x: auto; border-radius: 6px; }
-  a { color: #2b5eb8; }
-  .muted { color: #666; }
+:root { --fg:#1a1a1a; --muted:#666; --bg:#fff; --code-bg:#f5f5f5; --line:#e3e3e3; --link:#2b5eb8; }
+@media (prefers-color-scheme: dark) {
+  :root { --fg:#e6e6e6; --muted:#9a9a9a; --bg:#151515; --code-bg:#1f1f1f; --line:#333; --link:#79a9f0; }
+}
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+       font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:52rem; margin:0 auto; padding:2.5rem 1.2rem 5rem; }
+header { border-bottom:1px solid var(--line); margin-bottom:2rem; padding-bottom:1rem; }
+header nav a { margin-right:1.2rem; }
+h1 { font-size:2rem; margin:.2rem 0 .4rem; }
+h2 { font-size:1.35rem; margin-top:2.5rem; padding-top:.4rem; border-top:1px solid var(--line); }
+h3 { font-size:1.05rem; margin-top:1.8rem; }
+a { color:var(--link); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.92em;
+       background:var(--code-bg); padding:.12em .35em; border-radius:4px; }
+pre { background:var(--code-bg); padding:.9rem 1.1rem; border-radius:8px; overflow-x:auto; }
+pre code { background:none; padding:0; }
+table { border-collapse:collapse; width:100%; margin:1rem 0; display:block; overflow-x:auto; }
+th,td { text-align:left; padding:.45rem .7rem; border-bottom:1px solid var(--line); vertical-align:top; }
+th { font-weight:600; }
+.muted { color:var(--muted); }
+.cmd { margin-bottom:2.5rem; }
+.toc { columns:2; column-gap:2rem; padding-left:1.1rem; }
+@media (max-width:40rem) { .toc { columns:1; } }
+footer { margin-top:4rem; padding-top:1rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; }
 </style>
-
+<body>
+<div class="wrap">
+<header><nav><a href="./">gv</a><a href="commands.html">Команды</a><a href="https://gitverse.ru/veryviolet/gv">Исходники</a><a href="https://gitverse.ru/veryviolet/gv/releases">Релизы</a></nav></header>
 <h1>gv</h1>
-<p>Консольный клиент <a href="https://gitverse.ru">GitVerse</a>, устроенный по образцу <code>gh</code>.</p>
+<p class="muted">Консольный клиент <a href="https://gitverse.ru">GitVerse</a>, устроенный по образцу
+<a href="https://cli.github.com"><code>gh</code></a>. Репозитории, pull request'ы, задачи и релизы
+без ухода из терминала.</p>
+
+<pre><code>gv repo view
+gv pr list --state all
+gv issue create --title "Падает на старте" --body-file notes.md
+gv api /user --jq .login</code></pre>
 
 <h2>Установка</h2>
-<pre>go install gitverse.ru/veryviolet/gv/cmd/gv@latest</pre>
-<p>Пакеты <code>deb</code>, <code>rpm</code> и <code>apk</code> — в
-<a href="https://gitverse.ru/veryviolet/gv/releases">релизах</a>.</p>
 
-<h2>Исходники</h2>
-<p><a href="https://gitverse.ru/veryviolet/gv">gitverse.ru/veryviolet/gv</a></p>
+<h3>Через Go</h3>
+<p>Работает без токена и без дополнительных настроек:</p>
+<pre><code>go install gitverse.ru/veryviolet/gv/cmd/gv@latest</code></pre>
 
-<p class="muted">Эта страница собрана из ветки <code>pages</code>.</p>
+<h3>Пакеты</h3>
+<p>Готовые <code>deb</code>, <code>rpm</code> и <code>apk</code> под amd64 и arm64 лежат в
+<a href="https://gitverse.ru/veryviolet/gv/releases">релизах</a>. В пакет входят бинарник,
+man-страницы и автодополнения для bash, zsh и fish.</p>
+<pre><code># Debian, Ubuntu, Astra
+gunzip -c gv_0.1.0-1_amd64.deb.gz &gt; gv.deb &amp;&amp; sudo dpkg -i gv.deb
+
+# Fedora, RHEL, Alma, Rocky, РЕД ОС
+gunzip -c gv-0.1.0-1.x86_64.rpm.gz &gt; gv.rpm &amp;&amp; sudo rpm -i gv.rpm
+
+# Alpine
+sudo apk add --allow-untrusted gv_0.1.0-r1_x86_64.apk</code></pre>
+
+<h2>Авторизация</h2>
+<p>OAuth device flow у GitVerse нет, поэтому токен создаётся в веб-интерфейсе на странице
+<a href="https://gitverse.ru/settings/tokens">настроек</a> и вставляется в <code>gv</code>:</p>
+<pre><code>gv auth login</code></pre>
+<p>Токен хранится в <code>~/.config/gv/hosts.yml</code> с правами <code>0600</code>. Переменные
+<code>GV_TOKEN</code> и <code>GITVERSE_TOKEN</code> имеют приоритет над файлом и на диск не пишутся.
+Чтобы <code>git</code> ходил по HTTPS с тем же токеном — <code>gv auth setup-git</code>.</p>
+<p class="muted">API GitVerse требует токен для всех эндпоинтов, включая чтение публичных
+репозиториев: анонимных запросов не бывает.</p>
+
+<h2>Машинный вывод</h2>
+<p>У всех списковых команд есть <code>--json</code>, <code>--jq</code> и <code>--template</code>.
+В терминале вывод табличный и цветной, в пайпе — TSV без цветов.</p>
+<pre><code>gv pr list --json --jq '.[] | "\(.number) \(.title)"'
+gv repo list --template '{{range .}}{{tablerow .full_name .visibility}}{{end}}{{tablerender}}'</code></pre>
+
+<h2>Чего нет</h2>
+<p>Это ограничения API платформы, а не пробелы клиента:</p>
+<table>
+<tr><th>Аналог в <code>gh</code></th><th>Почему нет</th></tr>
+<tr><td><code>gh pr merge</code></td><td>В API есть только проверка «смержен ли»; эндпоинта на слияние нет</td></tr>
+<tr><td><code>gh pr review</code></td><td>Review-эндпоинтов в спецификации нет</td></tr>
+<tr><td><code>gh search repos</code></td><td>Из поиска доступен только поиск пользователей</td></tr>
+<tr><td><code>gh label</code></td><td>Метки только читаются, CRUD нет</td></tr>
+</table>
+
+<footer>gv — консольный клиент GitVerse. Лицензия MIT.</footer>
+</div>

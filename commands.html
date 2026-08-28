@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<title>gv — справочник команд</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root { --fg:#1a1a1a; --muted:#666; --bg:#fff; --code-bg:#f5f5f5; --line:#e3e3e3; --link:#2b5eb8; }
+@media (prefers-color-scheme: dark) {
+  :root { --fg:#e6e6e6; --muted:#9a9a9a; --bg:#151515; --code-bg:#1f1f1f; --line:#333; --link:#79a9f0; }
+}
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+       font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+.wrap { max-width:52rem; margin:0 auto; padding:2.5rem 1.2rem 5rem; }
+header { border-bottom:1px solid var(--line); margin-bottom:2rem; padding-bottom:1rem; }
+header nav a { margin-right:1.2rem; }
+h1 { font-size:2rem; margin:.2rem 0 .4rem; }
+h2 { font-size:1.35rem; margin-top:2.5rem; padding-top:.4rem; border-top:1px solid var(--line); }
+h3 { font-size:1.05rem; margin-top:1.8rem; }
+a { color:var(--link); text-decoration:none; }
+a:hover { text-decoration:underline; }
+code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.92em;
+       background:var(--code-bg); padding:.12em .35em; border-radius:4px; }
+pre { background:var(--code-bg); padding:.9rem 1.1rem; border-radius:8px; overflow-x:auto; }
+pre code { background:none; padding:0; }
+table { border-collapse:collapse; width:100%; margin:1rem 0; display:block; overflow-x:auto; }
+th,td { text-align:left; padding:.45rem .7rem; border-bottom:1px solid var(--line); vertical-align:top; }
+th { font-weight:600; }
+.muted { color:var(--muted); }
+.cmd { margin-bottom:2.5rem; }
+.toc { columns:2; column-gap:2rem; padding-left:1.1rem; }
+@media (max-width:40rem) { .toc { columns:1; } }
+footer { margin-top:4rem; padding-top:1rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; }
+</style>
+<body>
+<div class="wrap">
+<header><nav><a href="./">gv</a><a href="commands.html">Команды</a><a href="https://gitverse.ru/veryviolet/gv">Исходники</a><a href="https://gitverse.ru/veryviolet/gv/releases">Релизы</a></nav></header>
+<h1>Справочник команд</h1>
+<ul class="toc">
+<li><a href="#gv-api"><code>gv api</code></a></li>
+<li><a href="#gv-auth"><code>gv auth</code></a></li>
+<li><a href="#gv-auth-login"><code>gv auth login</code></a></li>
+<li><a href="#gv-auth-logout"><code>gv auth logout</code></a></li>
+<li><a href="#gv-auth-setup-git"><code>gv auth setup-git</code></a></li>
+<li><a href="#gv-auth-status"><code>gv auth status</code></a></li>
+<li><a href="#gv-auth-token"><code>gv auth token</code></a></li>
+<li><a href="#gv-issue"><code>gv issue</code></a></li>
+<li><a href="#gv-issue-close"><code>gv issue close</code></a></li>
+<li><a href="#gv-issue-comment"><code>gv issue comment</code></a></li>
+<li><a href="#gv-issue-create"><code>gv issue create</code></a></li>
+<li><a href="#gv-issue-edit"><code>gv issue edit</code></a></li>
+<li><a href="#gv-issue-list"><code>gv issue list</code></a></li>
+<li><a href="#gv-issue-reopen"><code>gv issue reopen</code></a></li>
+<li><a href="#gv-issue-view"><code>gv issue view</code></a></li>
+<li><a href="#gv-pr"><code>gv pr</code></a></li>
+<li><a href="#gv-pr-checkout"><code>gv pr checkout</code></a></li>
+<li><a href="#gv-pr-close"><code>gv pr close</code></a></li>
+<li><a href="#gv-pr-commits"><code>gv pr commits</code></a></li>
+<li><a href="#gv-pr-create"><code>gv pr create</code></a></li>
+<li><a href="#gv-pr-diff"><code>gv pr diff</code></a></li>
+<li><a href="#gv-pr-edit"><code>gv pr edit</code></a></li>
+<li><a href="#gv-pr-files"><code>gv pr files</code></a></li>
+<li><a href="#gv-pr-list"><code>gv pr list</code></a></li>
+<li><a href="#gv-pr-reopen"><code>gv pr reopen</code></a></li>
+<li><a href="#gv-pr-view"><code>gv pr view</code></a></li>
+<li><a href="#gv-release"><code>gv release</code></a></li>
+<li><a href="#gv-release-create"><code>gv release create</code></a></li>
+<li><a href="#gv-release-delete"><code>gv release delete</code></a></li>
+<li><a href="#gv-release-list"><code>gv release list</code></a></li>
+<li><a href="#gv-release-upload"><code>gv release upload</code></a></li>
+<li><a href="#gv-release-view"><code>gv release view</code></a></li>
+<li><a href="#gv-repo"><code>gv repo</code></a></li>
+<li><a href="#gv-repo-clone"><code>gv repo clone</code></a></li>
+<li><a href="#gv-repo-create"><code>gv repo create</code></a></li>
+<li><a href="#gv-repo-delete"><code>gv repo delete</code></a></li>
+<li><a href="#gv-repo-fork"><code>gv repo fork</code></a></li>
+<li><a href="#gv-repo-list"><code>gv repo list</code></a></li>
+<li><a href="#gv-repo-view"><code>gv repo view</code></a></li>
+<li><a href="#gv-version"><code>gv version</code></a></li>
+</ul>
+
+<div class="cmd" id="gv">
+<h2><code>gv</code></h2>
+<p>GitVerse from the command line</p>
+<p>Work with GitVerse repositories, pull requests and issues without leaving the terminal.</p>
+<pre><code>gv &lt;command&gt; &lt;subcommand&gt; [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>--help</code></td><td>Show help for command</td></tr>
+<tr><td><code>--hostname &lt;string&gt;</code></td><td>GitVerse hostname to operate against</td></tr>
+<tr><td><code>-v, --version</code></td><td>Show gv version</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv repo view veryviolet/gv
+  $ gv pr list
+  $ gv issue create --title &#34;Bug&#34; --body &#34;...&#34;
+  $ gv api /user</code></pre>
+</div>
+
+<div class="cmd" id="gv-api">
+<h2><code>gv api</code></h2>
+<p>Make an authenticated GitVerse API request</p>
+<p>Make an authenticated HTTP request to the GitVerse API.</p>
+<p>The endpoint is a path such as &#34;/user&#34; or &#34;repos/{owner}/{repo}/pulls&#34;; a full
+URL is also accepted. The placeholders {owner}, {repo} and {hostname} are
+filled in from the repository in the current directory.</p>
+<p>The default method is GET, or POST when parameters are supplied. Parameters are
+sent as a query string for GET and HEAD, and as a JSON body otherwise.</p>
+<p>With --paginate, every page of a collection is fetched and the arrays are
+merged into a single JSON array.</p>
+<pre><code>gv api &lt;endpoint&gt; [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-F, --field &lt;key=value&gt;</code></td><td>Add a typed parameter in key=value format</td></tr>
+<tr><td><code>-H, --header &lt;key:value&gt;</code></td><td>Add an HTTP request header in key:value format</td></tr>
+<tr><td><code>-i, --include</code></td><td>Include the HTTP status line and response headers</td></tr>
+<tr><td><code>--input &lt;file&gt;</code></td><td>Send the contents of file as the body (use &#34;-&#34; for stdin)</td></tr>
+<tr><td><code>-q, --jq &lt;expression&gt;</code></td><td>Filter the JSON response with a jq expression</td></tr>
+<tr><td><code>--limit &lt;n&gt;</code></td><td>Stop after fetching n items when paginating</td></tr>
+<tr><td><code>-X, --method &lt;string&gt;</code></td><td>HTTP method for the request</td></tr>
+<tr><td><code>--paginate</code></td><td>Fetch every page of a paginated collection</td></tr>
+<tr><td><code>-f, --raw-field &lt;key=value&gt;</code></td><td>Add a string parameter in key=value format</td></tr>
+<tr><td><code>--silent</code></td><td>Do not print the response body</td></tr>
+<tr><td><code>-t, --template &lt;template&gt;</code></td><td>Format the JSON response with a Go template</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code># the authenticated user
+  $ gv api /user
+
+  # pull requests of the current repository
+  $ gv api repos/{owner}/{repo}/pulls
+
+  # every repository you can see, as a flat list of names
+  $ gv api /user/repos --paginate --jq &#39;.[].full_name&#39;
+
+  # create an issue
+  $ gv api repos/{owner}/{repo}/issues -f title=&#39;Bug&#39; -f body=&#39;Steps...&#39;
+
+  # close a pull request
+  $ gv api -X PATCH repos/{owner}/{repo}/pulls/12 -f state=closed</code></pre>
+</div>
+
+<div class="cmd" id="gv-auth">
+<h2><code>gv auth</code></h2>
+<p>Authenticate gv with GitVerse</p>
+<p>Manage the credentials gv uses.</p>
+<p>GitVerse issues personal access tokens from the web interface; gv stores the
+token you paste in `$GV_CONFIG_DIR/hosts.yml` with 0600 permissions.
+The environment variables GV_TOKEN and GITVERSE_TOKEN take precedence over the
+stored credential and are never written to disk.</p>
+<pre><code>gv auth &lt;command&gt;</code></pre>
+</div>
+
+<div class="cmd" id="gv-auth-login">
+<h2><code>gv auth login</code></h2>
+<p>Authenticate with a GitVerse host</p>
+<p>Store a GitVerse personal access token.</p>
+<p>GitVerse has no OAuth device flow, so the token is created in the web interface
+and pasted here. Create one at https://gitverse.ru/settings/tokens and grant it
+the scopes the commands you intend to use require.</p>
+<pre><code>gv auth login [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-p, --git-protocol &lt;string&gt;</code></td><td>The protocol to use for git operations: {https|ssh}</td></tr>
+<tr><td><code>-h, --hostname &lt;string&gt;</code></td><td>The GitVerse host to authenticate with</td></tr>
+<tr><td><code>--skip-verify</code></td><td>Store the token without checking it against the API</td></tr>
+<tr><td><code>--with-token</code></td><td>Read the token from standard input</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code># paste the token interactively
+  $ gv auth login
+
+  # read the token from a file, for scripts and CI
+  $ gv auth login --with-token &lt; token.txt</code></pre>
+</div>
+
+<div class="cmd" id="gv-auth-logout">
+<h2><code>gv auth logout</code></h2>
+<p>Remove stored credentials for a host</p>
+<p>Forget the token stored for a GitVerse host.</p>
+<p>Tokens supplied through GV_TOKEN or GITVERSE_TOKEN are not stored by gv and
+cannot be removed this way; unset the variable instead.</p>
+<pre><code>gv auth logout [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-h, --hostname &lt;string&gt;</code></td><td>The host to log out of</td></tr>
+</table>
+</div>
+
+<div class="cmd" id="gv-auth-setup-git">
+<h2><code>gv auth setup-git</code></h2>
+<p>Configure git to authenticate with the stored token</p>
+<p>Register gv as a git credential helper for a GitVerse host.</p>
+<p>Afterwards `git clone`, `git fetch` and `git push` over
+HTTPS use the token gv holds, so no separate git credential setup is needed.</p>
+<pre><code>gv auth setup-git [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-h, --hostname &lt;string&gt;</code></td><td>The host to configure</td></tr>
+</table>
+</div>
+
+<div class="cmd" id="gv-auth-status">
+<h2><code>gv auth status</code></h2>
+<p>Show the authentication state</p>
+<p>Report which hosts gv has credentials for, where each credential came
+from, and whether it is still accepted by the API.</p>
+<pre><code>gv auth status [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-h, --hostname &lt;string&gt;</code></td><td>Check a single host</td></tr>
+<tr><td><code>-t, --show-token</code></td><td>Display the token in the output</td></tr>
+<tr><td><code>--skip-verify</code></td><td>Do not contact the API</td></tr>
+</table>
+</div>
+
+<div class="cmd" id="gv-auth-token">
+<h2><code>gv auth token</code></h2>
+<p>Print the token gv would use</p>
+<p>Print the authentication token gv resolves for a host.</p>
+<p>Useful for feeding other tools, e.g. `curl -H &#34;Authorization: Bearer $(gv auth token)&#34;`.</p>
+<pre><code>gv auth token [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-h, --hostname &lt;string&gt;</code></td><td>The host to look up</td></tr>
+</table>
+</div>
+
+<div class="cmd" id="gv-issue">
+<h2><code>gv issue</code></h2>
+<p>Work with issues</p>
+<p>List, inspect, open and close issues.</p>
+<p>GitVerse returns issues and pull requests from the same endpoint; gv filters
+pull requests out of issue listings unless --include-prs is given.</p>
+<pre><code>gv issue &lt;command&gt;</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-R, --repo &lt;OWNER/REPO&gt;</code></td><td>Select a repository using the OWNER/REPO format</td></tr>
+</table>
+</div>
+
+<div class="cmd" id="gv-issue-close">
+<h2><code>gv issue close</code></h2>
+<p>Close an issue</p>
+<pre><code>gv issue close &lt;number&gt; [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-c, --comment &lt;comment&gt;</code></td><td>Leave a closing comment</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv issue close 12 --comment &#34;Fixed in 1.4.1&#34;</code></pre>
+</div>
+
+<div class="cmd" id="gv-issue-comment">
+<h2><code>gv issue comment</code></h2>
+<p>Comment on an issue or pull request</p>
+<p>Add a comment.</p>
+<p>The same endpoint serves issues and pull requests, so this works for either.</p>
+<pre><code>gv issue comment &lt;number&gt; [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-b, --body &lt;string&gt;</code></td><td>Text of the comment</td></tr>
+<tr><td><code>-F, --body-file &lt;file&gt;</code></td><td>Read the comment from file (use &#34;-&#34; for stdin)</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv issue comment 12 --body &#34;Reproduced on 1.4.0&#34;
+  $ git log -1 | gv issue comment 12 --body-file -</code></pre>
+</div>
+
+<div class="cmd" id="gv-issue-create">
+<h2><code>gv issue create</code></h2>
+<p>Open a new issue</p>
+<p>Create an issue.</p>
+<p>A title is required; gv does not open an editor. Use --body-file - to read a
+long description from standard input.</p>
+<pre><code>gv issue create [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-a, --assignee &lt;people&gt;</code></td><td>Assign people to the issue</td></tr>
+<tr><td><code>-b, --body &lt;string&gt;</code></td><td>Body of the issue</td></tr>
+<tr><td><code>-F, --body-file &lt;file&gt;</code></td><td>Read the body from file (use &#34;-&#34; for stdin)</td></tr>
+<tr><td><code>--due-date &lt;date&gt;</code></td><td>Due date in YYYY-MM-DD format</td></tr>
+<tr><td><code>-l, --label &lt;labels&gt;</code></td><td>Add labels to the issue</td></tr>
+<tr><td><code>-t, --title &lt;string&gt;</code></td><td>Title of the issue</td></tr>
+<tr><td><code>-w, --web</code></td><td>Open the new-issue form in a browser instead</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv issue create --title &#34;Crash on startup&#34; --body &#34;Steps: ...&#34;
+  $ gv issue create -t &#34;Docs&#34; -F notes.md --label docs --assignee veryviolet</code></pre>
+</div>
+
+<div class="cmd" id="gv-issue-edit">
+<h2><code>gv issue edit</code></h2>
+<p>Edit an issue</p>
+<p>Change the title, body, labels or assignees of an issue.</p>
+<p>Only the flags you pass are sent. Note that --label and --assignee replace the
+existing sets rather than adding to them, because the API takes whole lists.</p>
+<pre><code>gv issue edit &lt;number&gt; [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-a, --assignee &lt;logins&gt;</code></td><td>Replace the assignees with these logins</td></tr>
+<tr><td><code>-b, --body &lt;string&gt;</code></td><td>New body</td></tr>
+<tr><td><code>-F, --body-file &lt;file&gt;</code></td><td>Read the new body from file (use &#34;-&#34; for stdin)</td></tr>
+<tr><td><code>--due-date &lt;date&gt;</code></td><td>New due date in YYYY-MM-DD format</td></tr>
+<tr><td><code>-l, --label &lt;names&gt;</code></td><td>Replace the labels with these names</td></tr>
+<tr><td><code>-t, --title &lt;string&gt;</code></td><td>New title</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv issue edit 12 --title &#34;Clearer title&#34;
+  $ gv issue edit 12 --label bug --label regression</code></pre>
+</div>
+
+<div class="cmd" id="gv-issue-list">
+<h2><code>gv issue list</code></h2>
+<p>List issues</p>
+<pre><code>gv issue list [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-a, --assignee &lt;login&gt;</code></td><td>Filter by assignee login</td></tr>
+<tr><td><code>--author &lt;login&gt;</code></td><td>Filter by author login</td></tr>
+<tr><td><code>--include-prs</code></td><td>Include pull requests in the listing</td></tr>
+<tr><td><code>-q, --jq &lt;expression&gt;</code></td><td>Filter the JSON output with a jq expression</td></tr>
+<tr><td><code>--json</code></td><td>Output the issues as JSON</td></tr>
+<tr><td><code>-l, --label &lt;labels&gt;</code></td><td>Filter by labels</td></tr>
+<tr><td><code>-L, --limit &lt;int&gt;</code></td><td>Maximum number of issues to list</td></tr>
+<tr><td><code>--mention &lt;login&gt;</code></td><td>Filter by mentioned login</td></tr>
+<tr><td><code>--milestone &lt;milestone&gt;</code></td><td>Filter by milestone</td></tr>
+<tr><td><code>-S, --search &lt;query&gt;</code></td><td>Search issues with a query</td></tr>
+<tr><td><code>-s, --state &lt;string&gt;</code></td><td>Filter by state: {open|closed|all}</td></tr>
+<tr><td><code>-t, --template &lt;template&gt;</code></td><td>Format the JSON output with a Go template</td></tr>
+<tr><td><code>-w, --web</code></td><td>List issues in a browser</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv issue list
+  $ gv issue list --state all --label bug --limit 100
+  $ gv issue list --assignee veryviolet --json --jq &#39;.[].title&#39;</code></pre>
+</div>
+
+<div class="cmd" id="gv-issue-reopen">
+<h2><code>gv issue reopen</code></h2>
+<p>Reopen a closed issue</p>
+<pre><code>gv issue reopen &lt;number&gt; [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-c, --comment &lt;comment&gt;</code></td><td>Leave a comment when reopening</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv issue reopen 12</code></pre>
+</div>
+
+<div class="cmd" id="gv-issue-view">
+<h2><code>gv issue view</code></h2>
+<p>Show an issue</p>
+<pre><code>gv issue view &lt;number&gt; [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-c, --comments</code></td><td>Show the comment thread</td></tr>
+<tr><td><code>-q, --jq &lt;expression&gt;</code></td><td>Filter the JSON output with a jq expression</td></tr>
+<tr><td><code>--json</code></td><td>Output the issue as JSON</td></tr>
+<tr><td><code>-t, --template &lt;template&gt;</code></td><td>Format the JSON output with a Go template</td></tr>
+<tr><td><code>-w, --web</code></td><td>Open the issue in a browser</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv issue view 12
+  $ gv issue view 12 --comments</code></pre>
+</div>
+
+<div class="cmd" id="gv-pr">
+<h2><code>gv pr</code></h2>
+<p>Work with pull requests</p>
+<p>List, inspect and open pull requests.</p>
+<p>Commands that take a pull request accept its number; inside a git checkout the
+pull request for the current branch is found automatically.</p>
+<p>Note: the GitVerse API exposes no endpoint for merging a pull request, so gv
+has no &#34;pr merge&#34; command. Merge from the web interface.</p>
+<pre><code>gv pr &lt;command&gt;</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-R, --repo &lt;OWNER/REPO&gt;</code></td><td>Select a repository using the OWNER/REPO format</td></tr>
+</table>
+</div>
+
+<div class="cmd" id="gv-pr-checkout">
+<h2><code>gv pr checkout</code></h2>
+<p>Check out a pull request locally</p>
+<p>Fetch the head of a pull request and switch to it.</p>
+<p>gv first tries the server-side ref &#34;pull/&lt;number&gt;/head&#34;. Not every GitVerse
+deployment publishes those refs, so it falls back to fetching the head branch
+directly from the fork it lives in.</p>
+<pre><code>gv pr checkout &lt;number&gt; [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-b, --branch &lt;name&gt;</code></td><td>Local branch name to create</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv pr checkout 42
+  $ gv pr checkout 42 --branch review-42</code></pre>
+</div>
+
+<div class="cmd" id="gv-pr-close">
+<h2><code>gv pr close</code></h2>
+<p>Close a pull request</p>
+<pre><code>gv pr close [&lt;number&gt;] [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-c, --comment &lt;comment&gt;</code></td><td>Leave a closing comment</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv pr close 42 --comment &#34;Superseded by #45&#34;</code></pre>
+</div>
+
+<div class="cmd" id="gv-pr-commits">
+<h2><code>gv pr commits</code></h2>
+<p>List the commits of a pull request</p>
+<pre><code>gv pr commits [&lt;number&gt;] [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-q, --jq &lt;expression&gt;</code></td><td>Filter the JSON output with a jq expression</td></tr>
+<tr><td><code>--json</code></td><td>Output the commits as JSON</td></tr>
+<tr><td><code>-t, --template &lt;template&gt;</code></td><td>Format the JSON output with a Go template</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv pr commits 42</code></pre>
+</div>
+
+<div class="cmd" id="gv-pr-create">
+<h2><code>gv pr create</code></h2>
+<p>Open a pull request</p>
+<p>Create a pull request.</p>
+<p>The head branch defaults to the current git branch and the base branch to the
+repository&#39;s default branch. A title is required; gv does not open an editor.</p>
+<pre><code>gv pr create [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-a, --assignee &lt;people&gt;</code></td><td>Assign people to the pull request</td></tr>
+<tr><td><code>-B, --base &lt;branch&gt;</code></td><td>The branch to merge into</td></tr>
+<tr><td><code>-b, --body &lt;string&gt;</code></td><td>Body of the pull request</td></tr>
+<tr><td><code>-F, --body-file &lt;file&gt;</code></td><td>Read the body from file (use &#34;-&#34; for stdin)</td></tr>
+<tr><td><code>-d, --draft</code></td><td>Open the pull request as a draft</td></tr>
+<tr><td><code>-H, --head &lt;branch&gt;</code></td><td>The branch that contains the commits</td></tr>
+<tr><td><code>-l, --label-id &lt;id&gt;</code></td><td>Add labels by numeric id</td></tr>
+<tr><td><code>--push</code></td><td>Push the head branch to the remote first</td></tr>
+<tr><td><code>-t, --title &lt;string&gt;</code></td><td>Title of the pull request</td></tr>
+<tr><td><code>-w, --web</code></td><td>Open the compare page in a browser instead</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv pr create --title &#34;Fix pagination&#34; --body &#34;Closes #12&#34;
+  $ gv pr create -t &#34;WIP&#34; --draft --base develop
+  $ gv pr create -t &#34;Docs&#34; -F description.md --push</code></pre>
+</div>
+
+<div class="cmd" id="gv-pr-diff">
+<h2><code>gv pr diff</code></h2>
+<p>Show the changes of a pull request</p>
+<p>Print the patch of a pull request.</p>
+<p>The diff is assembled from the per-file patches the API returns, so it is a
+unified diff without the commit headers a &#34;git format-patch&#34; would carry.</p>
+<pre><code>gv pr diff [&lt;number&gt;] [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>--name-only</code></td><td>Print only the names of the changed files</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv pr diff
+  $ gv pr diff 42 --name-only</code></pre>
+</div>
+
+<div class="cmd" id="gv-pr-edit">
+<h2><code>gv pr edit</code></h2>
+<p>Edit a pull request</p>
+<p>Change the title, body or base branch of a pull request.</p>
+<p>Only the flags you pass are sent, so unspecified fields keep their values.</p>
+<pre><code>gv pr edit [&lt;number&gt;] [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-B, --base &lt;branch&gt;</code></td><td>New base branch</td></tr>
+<tr><td><code>-b, --body &lt;string&gt;</code></td><td>New body</td></tr>
+<tr><td><code>-F, --body-file &lt;file&gt;</code></td><td>Read the new body from file (use &#34;-&#34; for stdin)</td></tr>
+<tr><td><code>-t, --title &lt;string&gt;</code></td><td>New title</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv pr edit 42 --title &#34;Better title&#34;
+  $ gv pr edit 42 --body-file notes.md
+  $ gv pr edit 42 --base develop</code></pre>
+</div>
+
+<div class="cmd" id="gv-pr-files">
+<h2><code>gv pr files</code></h2>
+<p>List the files a pull request changes</p>
+<pre><code>gv pr files [&lt;number&gt;] [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-q, --jq &lt;expression&gt;</code></td><td>Filter the JSON output with a jq expression</td></tr>
+<tr><td><code>--json</code></td><td>Output the files as JSON</td></tr>
+<tr><td><code>-t, --template &lt;template&gt;</code></td><td>Format the JSON output with a Go template</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv pr files 42</code></pre>
+</div>
+
+<div class="cmd" id="gv-pr-list">
+<h2><code>gv pr list</code></h2>
+<p>List pull requests</p>
+<pre><code>gv pr list [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-B, --base &lt;branch&gt;</code></td><td>Filter by base branch</td></tr>
+<tr><td><code>--direction &lt;direction&gt;</code></td><td>Sort direction: {asc|desc}</td></tr>
+<tr><td><code>-H, --head &lt;string&gt;</code></td><td>Filter by head branch, as &#34;branch&#34; or &#34;owner:branch&#34;</td></tr>
+<tr><td><code>-q, --jq &lt;expression&gt;</code></td><td>Filter the JSON output with a jq expression</td></tr>
+<tr><td><code>--json</code></td><td>Output the pull requests as JSON</td></tr>
+<tr><td><code>-L, --limit &lt;int&gt;</code></td><td>Maximum number of pull requests to list</td></tr>
+<tr><td><code>--sort &lt;field&gt;</code></td><td>Sort by field</td></tr>
+<tr><td><code>-s, --state &lt;string&gt;</code></td><td>Filter by state: {open|closed|merged|all}</td></tr>
+<tr><td><code>-t, --template &lt;template&gt;</code></td><td>Format the JSON output with a Go template</td></tr>
+<tr><td><code>-w, --web</code></td><td>List pull requests in a browser</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv pr list
+  $ gv pr list --state all --limit 50
+  $ gv pr list --base main --json --jq &#39;.[].title&#39;</code></pre>
+</div>
+
+<div class="cmd" id="gv-pr-reopen">
+<h2><code>gv pr reopen</code></h2>
+<p>Reopen a closed pull request</p>
+<pre><code>gv pr reopen [&lt;number&gt;] [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-c, --comment &lt;comment&gt;</code></td><td>Leave a comment when reopening</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv pr reopen 42</code></pre>
+</div>
+
+<div class="cmd" id="gv-pr-view">
+<h2><code>gv pr view</code></h2>
+<p>Show a pull request</p>
+<p>Display the title, state, body and metadata of a pull request.</p>
+<p>Without a number, the pull request for the current branch is used.</p>
+<pre><code>gv pr view [&lt;number&gt;] [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-c, --comments</code></td><td>Show the comment thread</td></tr>
+<tr><td><code>-q, --jq &lt;expression&gt;</code></td><td>Filter the JSON output with a jq expression</td></tr>
+<tr><td><code>--json</code></td><td>Output the pull request as JSON</td></tr>
+<tr><td><code>-t, --template &lt;template&gt;</code></td><td>Format the JSON output with a Go template</td></tr>
+<tr><td><code>-w, --web</code></td><td>Open the pull request in a browser</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv pr view
+  $ gv pr view 42 --comments
+  $ gv pr view 42 --web</code></pre>
+</div>
+
+<div class="cmd" id="gv-release">
+<h2><code>gv release</code></h2>
+<p>Work with releases</p>
+<p>Publish releases and attach build artefacts to them.</p>
+<p>A release is identified by its tag; the tag must already exist in the
+repository, or be created from --target when the release is published.</p>
+<pre><code>gv release &lt;command&gt;</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-R, --repo &lt;OWNER/REPO&gt;</code></td><td>Select a repository using the OWNER/REPO format</td></tr>
+</table>
+</div>
+
+<div class="cmd" id="gv-release-create">
+<h2><code>gv release create</code></h2>
+<p>Publish a release</p>
+<p>Create a release for a tag and, optionally, attach files to it.</p>
+<p>Files given as positional arguments or with --asset are uploaded once the
+release exists.</p>
+<pre><code>gv release create &lt;tag&gt; [&lt;file&gt;...] [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-a, --asset &lt;files&gt;</code></td><td>Additional files to attach</td></tr>
+<tr><td><code>-d, --draft</code></td><td>Save the release as a draft</td></tr>
+<tr><td><code>-n, --notes &lt;string&gt;</code></td><td>Release notes</td></tr>
+<tr><td><code>-F, --notes-file &lt;file&gt;</code></td><td>Read the release notes from file (use &#34;-&#34; for stdin)</td></tr>
+<tr><td><code>-p, --prerelease</code></td><td>Mark the release as a prerelease</td></tr>
+<tr><td><code>--target &lt;string&gt;</code></td><td>Branch or commit the tag should point at</td></tr>
+<tr><td><code>-t, --title &lt;string&gt;</code></td><td>Title of the release</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv release create v0.1.0 --title &#34;gv 0.1.0&#34; --notes-file CHANGELOG.md
+  $ gv release create v0.1.0 dist/*.deb dist/*.rpm
+  $ gv release create v0.2.0-rc1 --prerelease --target main</code></pre>
+</div>
+
+<div class="cmd" id="gv-release-delete">
+<h2><code>gv release delete</code></h2>
+<p>Delete a release</p>
+<p>Delete a release. The git tag itself is left alone.</p>
+<pre><code>gv release delete &lt;tag&gt; [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>--yes</code></td><td>Skip the confirmation prompt</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv release delete v0.1.0 --yes</code></pre>
+</div>
+
+<div class="cmd" id="gv-release-list">
+<h2><code>gv release list</code></h2>
+<p>List releases</p>
+<pre><code>gv release list [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-q, --jq &lt;expression&gt;</code></td><td>Filter the JSON output with a jq expression</td></tr>
+<tr><td><code>--json</code></td><td>Output the releases as JSON</td></tr>
+<tr><td><code>-L, --limit &lt;int&gt;</code></td><td>Maximum number of releases to list</td></tr>
+<tr><td><code>-t, --template &lt;template&gt;</code></td><td>Format the JSON output with a Go template</td></tr>
+</table>
+</div>
+
+<div class="cmd" id="gv-release-upload">
+<h2><code>gv release upload</code></h2>
+<p>Attach files to a release</p>
+<p>Upload build artefacts to an existing release.</p>
+<p>With --clobber an asset of the same name is deleted first; otherwise the API
+decides what to do with a duplicate name.</p>
+<pre><code>gv release upload &lt;tag&gt; &lt;file&gt;... [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>--clobber</code></td><td>Replace assets of the same name</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv release upload v0.1.0 dist/gv_0.1.0_amd64.deb
+  $ gv release upload v0.1.0 dist/* --clobber</code></pre>
+</div>
+
+<div class="cmd" id="gv-release-view">
+<h2><code>gv release view</code></h2>
+<p>Show a release</p>
+<p>Show a release and the files attached to it. Without a tag, the latest release is shown.</p>
+<pre><code>gv release view [&lt;tag&gt;] [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-q, --jq &lt;expression&gt;</code></td><td>Filter the JSON output with a jq expression</td></tr>
+<tr><td><code>--json</code></td><td>Output the release as JSON</td></tr>
+<tr><td><code>-t, --template &lt;template&gt;</code></td><td>Format the JSON output with a Go template</td></tr>
+<tr><td><code>-w, --web</code></td><td>Open the release in a browser</td></tr>
+</table>
+</div>
+
+<div class="cmd" id="gv-repo">
+<h2><code>gv repo</code></h2>
+<p>Work with GitVerse repositories</p>
+<p>Create, inspect, clone and fork repositories.</p>
+<p>Commands that take a repository accept it as &#34;OWNER/REPO&#34;; run inside a git
+repository with a GitVerse remote and the argument can be omitted.</p>
+<pre><code>gv repo &lt;command&gt;</code></pre>
+</div>
+
+<div class="cmd" id="gv-repo-clone">
+<h2><code>gv repo clone</code></h2>
+<p>Clone a repository locally</p>
+<p>Clone a GitVerse repository.</p>
+<p>Arguments after &#34;--&#34; are passed straight to git clone. When the repository is
+a fork, a remote named &#34;upstream&#34; is added for its parent.</p>
+<pre><code>gv repo clone &lt;repository&gt; [&lt;directory&gt;] [-- &lt;git-flags&gt;...]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-p, --protocol &lt;string&gt;</code></td><td>Clone protocol to use: {https|ssh}</td></tr>
+<tr><td><code>--upstream-remote-name &lt;name&gt;</code></td><td>Remote name to create for the parent of a fork</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv repo clone gitverse/rest-api-description
+  $ gv repo clone veryviolet/gv gv-cli
+  $ gv repo clone veryviolet/gv -- --depth 1</code></pre>
+</div>
+
+<div class="cmd" id="gv-repo-create">
+<h2><code>gv repo create</code></h2>
+<p>Create a new repository</p>
+<p>Create a repository on GitVerse.</p>
+<p>Pass &#34;OWNER/NAME&#34; to create it inside an organization you belong to; a bare
+name creates it under your own account. New repositories are private unless
+--public is given.</p>
+<pre><code>gv repo create &lt;name&gt; [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>--add-readme</code></td><td>Initialise the repository with a README</td></tr>
+<tr><td><code>-c, --clone</code></td><td>Clone the new repository afterwards</td></tr>
+<tr><td><code>-d, --description &lt;string&gt;</code></td><td>Description of the repository</td></tr>
+<tr><td><code>--gitignore &lt;templates&gt;</code></td><td>Gitignore templates to apply</td></tr>
+<tr><td><code>--private</code></td><td>Make the repository private (default)</td></tr>
+<tr><td><code>--public</code></td><td>Make the repository public</td></tr>
+<tr><td><code>--template</code></td><td>Mark the repository as a template</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv repo create my-project --private --add-readme
+  $ gv repo create myorg/service --description &#34;Billing service&#34; --public
+  $ gv repo create tools --clone</code></pre>
+</div>
+
+<div class="cmd" id="gv-repo-delete">
+<h2><code>gv repo delete</code></h2>
+<p>Delete a repository</p>
+<p>Delete a repository on GitVerse. This cannot be undone.</p>
+<p>Interactively you are asked to retype the full repository name. In scripts,
+pass --yes to skip the prompt.</p>
+<pre><code>gv repo delete [&lt;repository&gt;] [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>--yes</code></td><td>Skip the confirmation prompt</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv repo delete veryviolet/scratch
+  $ gv repo delete veryviolet/scratch --yes</code></pre>
+</div>
+
+<div class="cmd" id="gv-repo-fork">
+<h2><code>gv repo fork</code></h2>
+<p>Create a fork of a repository</p>
+<p>Fork a repository into your account or an organization.</p>
+<p>Run inside a clone of the upstream repository and pass --remote to add the new
+fork as a git remote.</p>
+<pre><code>gv repo fork [&lt;repository&gt;] [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>--clone</code></td><td>Clone the fork afterwards</td></tr>
+<tr><td><code>--fork-name &lt;string&gt;</code></td><td>Rename the forked repository</td></tr>
+<tr><td><code>--org &lt;organization&gt;</code></td><td>Create the fork in an organization</td></tr>
+<tr><td><code>--remote</code></td><td>Add the fork as a git remote in the current repository</td></tr>
+<tr><td><code>--remote-name &lt;name&gt;</code></td><td>Remote name to use with --remote</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv repo fork gitverse/rest-api-description --clone
+  $ gv repo fork --org myorg --remote</code></pre>
+</div>
+
+<div class="cmd" id="gv-repo-list">
+<h2><code>gv repo list</code></h2>
+<p>List repositories</p>
+<p>List repositories owned by you, by a user, or by an organization.</p>
+<p>The API returns every repository the token can see; the --fork, --source,
+--public and --private flags filter that list client-side.</p>
+<pre><code>gv repo list [&lt;owner&gt;] [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>--fork</code></td><td>Show only forks</td></tr>
+<tr><td><code>-q, --jq &lt;expression&gt;</code></td><td>Filter the JSON output with a jq expression</td></tr>
+<tr><td><code>--json</code></td><td>Output the repositories as JSON</td></tr>
+<tr><td><code>-L, --limit &lt;int&gt;</code></td><td>Maximum number of repositories to list</td></tr>
+<tr><td><code>--org &lt;organization&gt;</code></td><td>List repositories of an organization</td></tr>
+<tr><td><code>--private</code></td><td>Show only private repositories</td></tr>
+<tr><td><code>--public</code></td><td>Show only public repositories</td></tr>
+<tr><td><code>--source</code></td><td>Show only repositories that are not forks</td></tr>
+<tr><td><code>-t, --template &lt;template&gt;</code></td><td>Format the JSON output with a Go template</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv repo list
+  $ gv repo list veryviolet --limit 50
+  $ gv repo list --org myorg --source</code></pre>
+</div>
+
+<div class="cmd" id="gv-repo-view">
+<h2><code>gv repo view</code></h2>
+<p>Show a repository</p>
+<p>Display the description, statistics and README of a repository.</p>
+<p>Without an argument the repository of the current directory is used.</p>
+<pre><code>gv repo view [&lt;repository&gt;] [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-b, --branch &lt;branch&gt;</code></td><td>Read the README from this branch</td></tr>
+<tr><td><code>-q, --jq &lt;expression&gt;</code></td><td>Filter the JSON output with a jq expression</td></tr>
+<tr><td><code>--json</code></td><td>Output the repository as JSON</td></tr>
+<tr><td><code>-t, --template &lt;template&gt;</code></td><td>Format the JSON output with a Go template</td></tr>
+<tr><td><code>-w, --web</code></td><td>Open the repository in a browser</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv repo view
+  $ gv repo view gitverse/rest-api-description
+  $ gv repo view --web</code></pre>
+</div>
+
+<div class="cmd" id="gv-version">
+<h2><code>gv version</code></h2>
+<p>Print the version of gv</p>
+<pre><code>gv version</code></pre>
+</div>
+
+<footer>gv — консольный клиент GitVerse. Лицензия MIT.</footer>
+</div>
