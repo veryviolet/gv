@@ -1,0 +1,67 @@
+# Package definition for nfpm; one config produces deb, rpm and apk.
+#
+#   ARCH=amd64 VERSION=0.1.0 nfpm package -p deb -f nfpm.yaml -t dist/
+#
+# The Makefile drives it for every packager and architecture; see `make packages`.
+name: gv
+arch: ${ARCH}
+platform: linux
+version: ${VERSION}
+release: "1"
+section: utils
+priority: optional
+maintainer: veryviolet <veryviolet@users.noreply.gitverse.ru>
+vendor: veryviolet
+homepage: https://gitverse.ru/veryviolet/gv
+license: MIT
+description: |
+  GitVerse from the command line.
+  gv is a command-line client for the GitVerse public API, built along the
+  lines of GitHub's gh: repositories, pull requests, issues and releases
+  without leaving the terminal.
+
+contents:
+  # The Makefile stages the right cross-compiled binary here before each run,
+  # rather than relying on environment expansion inside a glob.
+  - src: ./dist/gv
+    dst: /usr/bin/gv
+    file_info:
+      mode: 0755
+
+  - src: ./share/man/man1/*.1.gz
+    dst: /usr/share/man/man1/
+    file_info:
+      mode: 0644
+
+  - src: ./share/completions/gv.bash
+    dst: /usr/share/bash-completion/completions/gv
+    file_info:
+      mode: 0644
+  - src: ./share/completions/gv.zsh
+    dst: /usr/share/zsh/site-functions/_gv
+    file_info:
+      mode: 0644
+  - src: ./share/completions/gv.fish
+    dst: /usr/share/fish/vendor_completions.d/gv.fish
+    file_info:
+      mode: 0644
+
+  - src: ./LICENSE
+    dst: /usr/share/doc/gv/LICENSE
+    file_info:
+      mode: 0644
+  - src: ./README.md
+    dst: /usr/share/doc/gv/README.md
+    file_info:
+      mode: 0644
+
+# git is not required to run gv, but every interesting workflow needs it, so
+# it is a recommendation rather than a hard dependency.
+recommends:
+  - git
+
+deb:
+  fields:
+    Bugs: https://gitverse.ru/veryviolet/gv/issues
+rpm:
+  group: Development/Tools

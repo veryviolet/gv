@@ -9,6 +9,7 @@ import (
 	authCmd "gitverse.ru/veryviolet/gv/pkg/cmd/auth"
 	issueCmd "gitverse.ru/veryviolet/gv/pkg/cmd/issue"
 	prCmd "gitverse.ru/veryviolet/gv/pkg/cmd/pr"
+	releaseCmd "gitverse.ru/veryviolet/gv/pkg/cmd/release"
 	repoCmd "gitverse.ru/veryviolet/gv/pkg/cmd/repo"
 	versionCmd "gitverse.ru/veryviolet/gv/pkg/cmd/version"
 )
@@ -60,6 +61,7 @@ func NewCmdRoot(f *cmdutil.Factory) *cobra.Command {
 	cmd.AddCommand(repoCmd.NewCmdRepo(f))
 	cmd.AddCommand(prCmd.NewCmdPR(f))
 	cmd.AddCommand(issueCmd.NewCmdIssue(f))
+	cmd.AddCommand(releaseCmd.NewCmdRelease(f))
 	cmd.AddCommand(apiCmd.NewCmdAPI(f))
 
 	return cmd

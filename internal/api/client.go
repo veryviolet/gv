@@ -185,6 +185,17 @@ func (c *Client) NewRequest(ctx context.Context, method, path string, body io.Re
 	return req, nil
 }
 
+// NewUploadRequest builds a request carrying a body of some non-JSON content
+// type, such as the multipart payload the release-asset endpoint expects.
+func (c *Client) NewUploadRequest(ctx context.Context, method, path, contentType string, body io.Reader) (*http.Request, error) {
+	req, err := c.NewRequest(ctx, method, path, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", contentType)
+	return req, nil
+}
+
 // Do sends a request, retrying transient failures. Non-2xx responses are
 // returned as *HTTPError with the body already drained.
 func (c *Client) Do(req *http.Request) (*http.Response, error) {
