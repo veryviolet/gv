@@ -14,7 +14,7 @@ PLATFORMS  := linux/amd64 linux/arm64 darwin/amd64 darwin/arm64 windows/amd64
 PKGARCHES  := amd64 arm64
 PACKAGERS  := deb rpm apk
 
-.PHONY: all build install test lint fmt vet generate docs clean cross packages tarballs checksums dist-clean release tidy
+.PHONY: all build install test lint fmt vet generate docs clean cross packages tarballs checksums dist-clean release publish tidy
 
 all: build
 
@@ -99,6 +99,17 @@ checksums:
 	@cd dist && rm -f SHA256SUMS && \
 		sha256sum *.deb *.rpm *.apk *.tar.gz *.zip > SHA256SUMS 2>/dev/null && \
 		echo "wrote dist/SHA256SUMS ($$(wc -l < SHA256SUMS) files)"
+
+# publish stages the artefacts in the form GitVerse accepts as release
+# attachments. The API sniffs the content of an upload and takes archives only:
+# .apk is already gzip and goes up untouched, while .deb and .rpm have to be
+# gzipped, and a plain-text SHA256SUMS is rejected outright.
+publish: release
+	@rm -rf dist/publish && mkdir -p dist/publish
+	@cp dist/*.apk dist/*.tar.gz dist/*.zip dist/publish/
+	@for f in dist/*.deb dist/*.rpm; do gzip -9 -c "$$f" > dist/publish/$$(basename $$f).gz; done
+	@cp dist/SHA256SUMS dist/publish/SHA256SUMS && gzip -9 -f dist/publish/SHA256SUMS
+	@ls -1 dist/publish
 
 # release builds everything that gets attached to a GitVerse release.
 release: dist-clean packages tarballs checksums

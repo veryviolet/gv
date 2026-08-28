@@ -16,17 +16,58 @@ gv api /user --jq .login
 
 ## Установка
 
+### Через Go
+
+Самый короткий путь, работает без токена:
+
+```bash
+go install gitverse.ru/veryviolet/gv/cmd/gv@latest
+```
+
+### Пакеты
+
+Готовые пакеты лежат в [релизах](https://gitverse.ru/veryviolet/gv/releases).
+Собираются `deb`, `rpm` и `apk` под `amd64` и `arm64`; в них входят бинарник,
+man-страницы и автодополнения для bash, zsh и fish.
+
+```bash
+# Debian, Ubuntu, Astra — .deb выложен сжатым, см. примечание ниже
+gunzip -c gv_0.1.0-1_amd64.deb.gz > gv.deb && sudo dpkg -i gv.deb
+
+# Fedora, RHEL, Alma, Rocky, РЕД ОС
+gunzip -c gv-0.1.0-1.x86_64.rpm.gz > gv.rpm && sudo rpm -i gv.rpm
+
+# Alpine
+sudo apk add --allow-untrusted gv_0.1.0-r1_x86_64.apk
+```
+
+> **Почему `.deb.gz`, а не `.deb`.** GitVerse проверяет содержимое файла,
+> прикрепляемого к релизу, и принимает только архивы: `.tar.gz`, `.zip`, `.apk`
+> (это тоже gzip) проходят, а `.deb`, `.rpm` и простой текст отклоняются с 400 и
+> 422. Поэтому deb и rpm выкладываются сжатыми. Ограничение серверное, не наше.
+
+### Tarball
+
+Для остальных систем — архив с бинарником, man-страницами и автодополнениями:
+
+```bash
+tar xzf gv_0.1.0_linux_amd64.tar.gz
+sudo install -m755 gv_0.1.0_linux_amd64/bin/gv /usr/local/bin/gv
+```
+
+Контрольные суммы всех артефактов — в `SHA256SUMS.gz` рядом с ними.
+
+### Из исходников
+
 Нужен Go 1.25 или новее.
 
 ```bash
-make build && install -m755 bin/gv /usr/local/bin/gv
+make build && sudo install -m755 bin/gv /usr/local/bin/gv
 ```
 
-Кросс-сборка под linux, darwin и windows (amd64/arm64):
-
-```bash
-make cross
-```
+Сборка релизного набора целиком — `make release` (нужен
+[nfpm](https://github.com/goreleaser/nfpm)), подготовка файлов в том виде,
+в каком их принимает GitVerse — `make publish`.
 
 ## Авторизация
 
