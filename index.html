@@ -56,13 +56,14 @@ gv api /user --jq .login</code></pre>
 <a href="https://gitverse.ru/veryviolet/gv/releases">релизах</a>. В пакет входят бинарник,
 man-страницы и автодополнения для bash, zsh и fish.</p>
 <pre><code># Debian, Ubuntu, Astra
-gunzip -c gv_0.1.0-1_amd64.deb.gz &gt; gv.deb &amp;&amp; sudo dpkg -i gv.deb
+gunzip -c gv_0.2.0-1_amd64.deb.gz &gt; gv.deb &amp;&amp; sudo dpkg -i gv.deb
 
 # Fedora, RHEL, Alma, Rocky, РЕД ОС
-gunzip -c gv-0.1.0-1.x86_64.rpm.gz &gt; gv.rpm &amp;&amp; sudo rpm -i gv.rpm
+gunzip -c gv-0.2.0-1.x86_64.rpm.gz &gt; gv.rpm &amp;&amp; sudo rpm -i gv.rpm
 
 # Alpine
-sudo apk add --allow-untrusted gv_0.1.0-r1_x86_64.apk</code></pre>
+sudo apk add --allow-untrusted gv_0.2.0-r1_x86_64.apk</code></pre>
+
 
 <h2>Авторизация</h2>
 <p>OAuth device flow у GitVerse нет, поэтому токен создаётся в веб-интерфейсе на странице
@@ -89,6 +90,8 @@ gv repo list --template '{{range .}}{{tablerow .full_name .visibility}}{{end}}{{
 <tr><td><code>gh search repos</code></td><td>Из поиска доступен только поиск пользователей</td></tr>
 <tr><td><code>gh label</code></td><td>Метки только читаются, CRUD нет</td></tr>
 </table>
+
+<p class="muted">Документация собрана для версии <code>v0.2.0</code>.</p>
 
 <footer>gv — консольный клиент GitVerse. Лицензия MIT.</footer>
 </div>
