@@ -96,19 +96,38 @@ gv api /user --jq .login</code></pre>
 <p>Работает без токена и без дополнительных настроек:</p>
 <pre><code>go install gitverse.ru/veryviolet/gv/cmd/gv@latest</code></pre>
 
-<h3>Пакеты</h3>
+<h3>apt</h3>
+<p>GitVerse держит родной реестр deb-пакетов и <strong>сам подписывает метаданные</strong>,
+поэтому <code>apt</code> проверяет подпись обычным образом, без <code>trusted=yes</code>.
+Ключ отдаётся анонимно.</p>
+<pre><code>sudo mkdir -p /etc/apt/keyrings
+sudo curl -fsSL https://gitverse.ru/api/packages/veryviolet/debian/repository.key -o /etc/apt/keyrings/gitverse-veryviolet.asc
+echo 'deb [signed-by=/etc/apt/keyrings/gitverse-veryviolet.asc] https://gitverse.ru/api/packages/veryviolet/debian stable main' | sudo tee /etc/apt/sources.list.d/gitverse-veryviolet.list
+sudo apt update &amp;&amp; sudo apt install gitverse-cli</code></pre>
+
+<h3>dnf</h3>
+<p>Файл <code>.repo</code> генерирует сам сервер, <code>gpgcheck</code> в нём включён.</p>
+<pre><code>sudo dnf config-manager --add-repo https://gitverse.ru/api/packages/veryviolet/rpm/gv.repo
+sudo dnf install gitverse-cli</code></pre>
+
+<p class="muted"><strong>Пакет называется <code>gitverse-cli</code>, команда — <code>gv</code>.</strong>
+Имя <code>gv</code> в Debian и Ubuntu занято просмотрщиком PostScript (GNU gv), причём с
+epoch <code>1:</code>, из-за которого его версия всегда старше нашей. Оба пакета владеют
+<code>/usr/bin/gv</code>, поэтому у нашего объявлен <code>Conflicts: gv</code>.</p>
+
+<h3>Пакеты файлом</h3>
 <p>Готовые <code>deb</code>, <code>rpm</code> и <code>apk</code> под amd64 и arm64 лежат в
 <a href="https://gitverse.ru/veryviolet/gv/releases">релизах</a>. В пакет входят бинарник,
 man-страницы и автодополнения для bash, zsh и fish.</p>
 `)
 	fmt.Fprintf(&b, `<pre><code># Debian, Ubuntu, Astra
-gunzip -c gv_%[1]s-1_amd64.deb.gz &gt; gv.deb &amp;&amp; sudo dpkg -i gv.deb
+gunzip -c gitverse-cli_%[1]s-1_amd64.deb.gz &gt; gv.deb &amp;&amp; sudo dpkg -i gv.deb
 
 # Fedora, RHEL, Alma, Rocky, РЕД ОС
-gunzip -c gv-%[1]s-1.x86_64.rpm.gz &gt; gv.rpm &amp;&amp; sudo rpm -i gv.rpm
+gunzip -c gitverse-cli-%[1]s-1.x86_64.rpm.gz &gt; gv.rpm &amp;&amp; sudo rpm -i gv.rpm
 
 # Alpine
-sudo apk add --allow-untrusted gv_%[1]s-r1_x86_64.apk</code></pre>
+sudo apk add --allow-untrusted gitverse-cli_%[1]s-r1_x86_64.apk</code></pre>
 `, html.EscapeString(pkgVersion))
 	b.WriteString(`
 
