@@ -284,6 +284,15 @@ GV_DEBUG=1 gv pr list
 `GV_API_URL`, `GV_API_VERSION`, `GV_DEBUG`, `GV_BROWSER`, `GV_PAGER`, `GV_EDITOR`,
 `NO_COLOR`.
 
+## Где живёт проект
+
+Основной дом — [gitverse.ru/veryviolet/gv](https://gitverse.ru/veryviolet/gv): там разработка,
+релизы, задачи и реестры пакетов. На [github.com/veryviolet/gv](https://github.com/veryviolet/gv)
+поддерживается зеркало — там те же ветки, теги и релизы, а в релизах `.deb` и `.rpm`
+лежат несжатыми, потому что GitHub не ограничивает типы вложений.
+
+Документация: [veryviolet.gitverse.site/gv](https://veryviolet.gitverse.site/gv).
+
 ## Лицензия
 
 MIT — см. [LICENSE](LICENSE).

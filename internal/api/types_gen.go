@@ -7,113 +7,113 @@ package api
 
 // ActionArtifact maps the "response.ActionArtifact" schema.
 type ActionArtifact struct {
-	ArchiveDownloadURL string            `json:"archive_download_url,omitempty"`
-	CreatedAt          string            `json:"created_at,omitempty"`
-	Expired            bool              `json:"expired,omitempty"`
-	ExpiresAt          string            `json:"expires_at,omitempty"`
-	ID                 int64             `json:"id,omitempty"`
-	Name               string            `json:"name,omitempty"`
-	SizeInBytes        int64             `json:"size_in_bytes,omitempty"`
-	UpdatedAt          string            `json:"updated_at,omitempty"`
-	URL                string            `json:"url,omitempty"`
-	WorkflowRun        ActionWorkflowRun `json:"workflow_run,omitempty"`
+	ArchiveDownloadURL string            `json:"archive_download_url"`
+	CreatedAt          string            `json:"created_at"`
+	Expired            bool              `json:"expired"`
+	ExpiresAt          string            `json:"expires_at"`
+	ID                 int64             `json:"id"`
+	Name               string            `json:"name"`
+	SizeInBytes        int64             `json:"size_in_bytes"`
+	UpdatedAt          string            `json:"updated_at"`
+	URL                string            `json:"url"`
+	WorkflowRun        ActionWorkflowRun `json:"workflow_run"`
 }
 
 // ActionArtifactList maps the "response.ActionArtifactList" schema.
 type ActionArtifactList struct {
-	Artifacts  []ActionArtifact `json:"artifacts,omitempty"`
-	TotalCount int64            `json:"total_count,omitempty"`
+	Artifacts  []ActionArtifact `json:"artifacts"`
+	TotalCount int64            `json:"total_count"`
 }
 
 // ActionLink maps the "response.ActionLink" schema.
 type ActionLink struct {
-	Description string `json:"description,omitempty"`
-	ID          int64  `json:"id,omitempty"`
-	Link        string `json:"link,omitempty"`
-	Name        string `json:"name,omitempty"`
-	RunID       int64  `json:"run_id,omitempty"`
+	Description string `json:"description"`
+	ID          int64  `json:"id"`
+	Link        string `json:"link"`
+	Name        string `json:"name"`
+	RunID       int64  `json:"run_id"`
 }
 
 // ActionRun maps the "response.ActionRun" schema.
 type ActionRun struct {
-	Actor             UserPublicInfo `json:"actor,omitempty"`
-	ApprovedBy        int64          `json:"approved_by,omitempty"`
-	CommitSHA         string         `json:"commit_sha,omitempty"`
-	Event             string         `json:"event,omitempty"`
-	ID                int64          `json:"id,omitempty"`
-	Index             int64          `json:"index,omitempty"`
-	IsForkPullRequest bool           `json:"is_fork_pull_request,omitempty"`
-	Name              string         `json:"name,omitempty"`
-	NeedApproval      bool           `json:"need_approval,omitempty"`
-	Ref               string         `json:"ref,omitempty"`
-	Started           string         `json:"started,omitempty"`
-	Status            string         `json:"status,omitempty"`
-	Stopped           string         `json:"stopped,omitempty"`
-	Title             string         `json:"title,omitempty"`
+	Actor             UserPublicInfo `json:"actor"`
+	ApprovedBy        int64          `json:"approved_by"`
+	CommitSHA         string         `json:"commit_sha"`
+	Event             string         `json:"event"`
+	ID                int64          `json:"id"`
+	Index             int64          `json:"index"`
+	IsForkPullRequest bool           `json:"is_fork_pull_request"`
+	Name              string         `json:"name"`
+	NeedApproval      bool           `json:"need_approval"`
+	Ref               string         `json:"ref"`
+	Started           string         `json:"started"`
+	Status            string         `json:"status"`
+	Stopped           string         `json:"stopped"`
+	Title             string         `json:"title"`
 }
 
 // ActionRunJob maps the "response.ActionRunJob" schema.
 type ActionRunJob struct {
-	CompletedAt  string             `json:"completed_at,omitempty"`
-	FailedStep   ActionRunJobStep   `json:"failed_step,omitempty"`
-	HeadBranch   string             `json:"head_branch,omitempty"`
-	HeadSHA      string             `json:"head_sha,omitempty"`
-	ID           int64              `json:"id,omitempty"`
-	Labels       []string           `json:"labels,omitempty"`
-	Name         string             `json:"name,omitempty"`
-	RunID        int64              `json:"run_id,omitempty"`
-	RunIndex     int64              `json:"run_index,omitempty"`
-	RunnerID     int64              `json:"runner_id,omitempty"`
-	RunnerName   string             `json:"runner_name,omitempty"`
-	StartedAt    string             `json:"started_at,omitempty"`
-	Status       string             `json:"status,omitempty"`
-	Steps        []ActionRunJobStep `json:"steps,omitempty"`
-	WorkflowName string             `json:"workflow_name,omitempty"`
+	CompletedAt  string             `json:"completed_at"`
+	FailedStep   ActionRunJobStep   `json:"failed_step"`
+	HeadBranch   string             `json:"head_branch"`
+	HeadSHA      string             `json:"head_sha"`
+	ID           int64              `json:"id"`
+	Labels       []string           `json:"labels"`
+	Name         string             `json:"name"`
+	RunID        int64              `json:"run_id"`
+	RunIndex     int64              `json:"run_index"`
+	RunnerID     int64              `json:"runner_id"`
+	RunnerName   string             `json:"runner_name"`
+	StartedAt    string             `json:"started_at"`
+	Status       string             `json:"status"`
+	Steps        []ActionRunJobStep `json:"steps"`
+	WorkflowName string             `json:"workflow_name"`
 }
 
 // ActionRunJobStep maps the "response.ActionRunJobStep" schema.
 type ActionRunJobStep struct {
-	CompletedAt string `json:"completed_at,omitempty"`
-	Index       int64  `json:"index,omitempty"`
+	CompletedAt string `json:"completed_at"`
+	Index       int64  `json:"index"`
 	// workflow или system
-	Kind      string `json:"kind,omitempty"`
-	LogIndex  int64  `json:"log_index,omitempty"`
-	LogLength int64  `json:"log_length,omitempty"`
-	Name      string `json:"name,omitempty"`
-	Number    int64  `json:"number,omitempty"`
-	StartedAt string `json:"started_at,omitempty"`
-	Status    string `json:"status,omitempty"`
+	Kind      string `json:"kind"`
+	LogIndex  int64  `json:"log_index"`
+	LogLength int64  `json:"log_length"`
+	Name      string `json:"name"`
+	Number    int64  `json:"number"`
+	StartedAt string `json:"started_at"`
+	Status    string `json:"status"`
 	// true для Set up job / Complete job
-	Synthetic bool `json:"synthetic,omitempty"`
+	Synthetic bool `json:"synthetic"`
 }
 
 // ActionRunner maps the "response.ActionRunner" schema.
 type ActionRunner struct {
-	Busy   bool                `json:"busy,omitempty"`
-	ID     int64               `json:"id,omitempty"`
-	Labels []ActionRunnerLabel `json:"labels,omitempty"`
-	Name   string              `json:"name,omitempty"`
-	Status string              `json:"status,omitempty"`
+	Busy   bool                `json:"busy"`
+	ID     int64               `json:"id"`
+	Labels []ActionRunnerLabel `json:"labels"`
+	Name   string              `json:"name"`
+	Status string              `json:"status"`
 }
 
 // ActionRunnerLabel maps the "response.ActionRunnerLabel" schema.
 type ActionRunnerLabel struct {
-	ID   int64  `json:"id,omitempty"`
-	Name string `json:"name,omitempty"`
-	Type string `json:"type,omitempty"`
+	ID   int64  `json:"id"`
+	Name string `json:"name"`
+	Type string `json:"type"`
 }
 
 // ActionRunners maps the "response.ActionRunners" schema.
 type ActionRunners struct {
-	Runners    []ActionRunner `json:"runners,omitempty"`
-	TotalCount int64          `json:"total_count,omitempty"`
+	Runners    []ActionRunner `json:"runners"`
+	TotalCount int64          `json:"total_count"`
 }
 
 // ActionWorkflowRun maps the "response.ActionWorkflowRun" schema.
 type ActionWorkflowRun struct {
-	HeadSHA      string `json:"head_sha,omitempty"`
-	ID           int64  `json:"id,omitempty"`
-	RepositoryID int64  `json:"repository_id,omitempty"`
+	HeadSHA      string `json:"head_sha"`
+	ID           int64  `json:"id"`
+	RepositoryID int64  `json:"repository_id"`
 }
 
 // AddCollaboratorOptionRequest maps the "request.AddCollaboratorOption" schema.
@@ -124,186 +124,186 @@ type AddCollaboratorOptionRequest struct {
 
 // Assignment maps the "response.Assignment" schema.
 type Assignment struct {
-	Accepted                    int64                `json:"accepted,omitempty"`
-	Deadline                    string               `json:"deadline,omitempty"`
-	Editor                      string               `json:"editor,omitempty"`
-	FeedbackPullRequestsEnabled bool                 `json:"feedback_pull_requests_enabled,omitempty"`
-	ID                          int64                `json:"id,omitempty"`
-	InvitationsEnabled          bool                 `json:"invitations_enabled,omitempty"`
-	InviteLink                  string               `json:"invite_link,omitempty"`
-	Language                    string               `json:"language,omitempty"`
-	MaxMembers                  int64                `json:"max_members,omitempty"`
-	MaxTeams                    int64                `json:"max_teams,omitempty"`
-	Passing                     int64                `json:"passing,omitempty"`
-	PublicRepo                  bool                 `json:"public_repo,omitempty"`
-	Slug                        string               `json:"slug,omitempty"`
-	Smartclass                  AssignmentClass      `json:"smartclass,omitempty"`
-	StaterCodeRepository        AssignmentRepository `json:"stater_code_repository,omitempty"`
-	StudentAreRepoAdmins        bool                 `json:"student_are_repo_admins,omitempty"`
-	Submitted                   int64                `json:"submitted,omitempty"`
-	Title                       string               `json:"title,omitempty"`
-	Type                        string               `json:"type,omitempty"`
+	Accepted                    int64                `json:"accepted"`
+	Deadline                    string               `json:"deadline"`
+	Editor                      string               `json:"editor"`
+	FeedbackPullRequestsEnabled bool                 `json:"feedback_pull_requests_enabled"`
+	ID                          int64                `json:"id"`
+	InvitationsEnabled          bool                 `json:"invitations_enabled"`
+	InviteLink                  string               `json:"invite_link"`
+	Language                    string               `json:"language"`
+	MaxMembers                  int64                `json:"max_members"`
+	MaxTeams                    int64                `json:"max_teams"`
+	Passing                     int64                `json:"passing"`
+	PublicRepo                  bool                 `json:"public_repo"`
+	Slug                        string               `json:"slug"`
+	Smartclass                  AssignmentClass      `json:"smartclass"`
+	StaterCodeRepository        AssignmentRepository `json:"stater_code_repository"`
+	StudentAreRepoAdmins        bool                 `json:"student_are_repo_admins"`
+	Submitted                   int64                `json:"submitted"`
+	Title                       string               `json:"title"`
+	Type                        string               `json:"type"`
 }
 
 // AssignmentClass maps the "response.AssignmentClass" schema.
 type AssignmentClass struct {
-	Archived bool   `json:"archived,omitempty"`
-	ID       int64  `json:"id,omitempty"`
-	Name     string `json:"name,omitempty"`
-	URL      string `json:"url,omitempty"`
+	Archived bool   `json:"archived"`
+	ID       int64  `json:"id"`
+	Name     string `json:"name"`
+	URL      string `json:"url"`
 }
 
 // AssignmentRepository maps the "response.AssignmentRepository" schema.
 type AssignmentRepository struct {
-	DefaultBranch string `json:"default_branch,omitempty"`
-	FullName      string `json:"full_name,omitempty"`
-	HTMLURL       string `json:"html_url,omitempty"`
-	ID            int64  `json:"id,omitempty"`
-	NodeID        string `json:"node_id,omitempty"`
-	Private       bool   `json:"private,omitempty"`
+	DefaultBranch string `json:"default_branch"`
+	FullName      string `json:"full_name"`
+	HTMLURL       string `json:"html_url"`
+	ID            int64  `json:"id"`
+	NodeID        string `json:"node_id"`
+	Private       bool   `json:"private"`
 }
 
 // Attachment maps the "response.Attachment" schema.
 type Attachment struct {
-	BrowserDownloadURL string `json:"browser_download_url,omitempty"`
-	CreatedAt          string `json:"created_at,omitempty"`
-	DownloadCount      int64  `json:"download_count,omitempty"`
-	ID                 int64  `json:"id,omitempty"`
-	Name               string `json:"name,omitempty"`
-	Size               int64  `json:"size,omitempty"`
-	Uuid               string `json:"uuid,omitempty"`
+	BrowserDownloadURL string `json:"browser_download_url"`
+	CreatedAt          string `json:"created_at"`
+	DownloadCount      int64  `json:"download_count"`
+	ID                 int64  `json:"id"`
+	Name               string `json:"name"`
+	Size               int64  `json:"size"`
+	Uuid               string `json:"uuid"`
 }
 
 // Branch maps the "response.Branch" schema.
 type Branch struct {
-	Commit    CommitMeta `json:"commit,omitempty"`
-	Name      string     `json:"name,omitempty"`
-	Protected bool       `json:"protected,omitempty"`
+	Commit    CommitMeta `json:"commit"`
+	Name      string     `json:"name"`
+	Protected bool       `json:"protected"`
 }
 
 // Collaborator maps the "response.Collaborator" schema.
 type Collaborator struct {
 	// Адрес аватарки
-	AvatarURL string `json:"avatar_url,omitempty"`
+	AvatarURL string `json:"avatar_url"`
 	// О себе
-	Bio string `json:"bio,omitempty"`
+	Bio string `json:"bio"`
 	// Почта
-	Email string `json:"email,omitempty"`
+	Email string `json:"email"`
 	// Url для получения подписчиков пользователя
-	FollowersURL string `json:"followers_url,omitempty"`
+	FollowersURL string `json:"followers_url"`
 	// Url для получения подписок пользователя
-	FollowingURL string `json:"following_url,omitempty"`
+	FollowingURL string `json:"following_url"`
 	// Полное имя
-	FullName string `json:"full_name,omitempty"`
+	FullName string `json:"full_name"`
 	// Адрес страницы пользователя
-	HTMLURL string `json:"html_url,omitempty"`
+	HTMLURL string `json:"html_url"`
 	// Идентификатор
-	ID int64 `json:"id,omitempty"`
+	ID int64 `json:"id"`
 	// Логин пользователя
-	Login string `json:"login,omitempty"`
+	Login string `json:"login"`
 	// Имя пользователя
-	Name string `json:"name,omitempty"`
+	Name string `json:"name"`
 	// Url для получения организаций пользователя
-	OrganizationsURL string `json:"organizations_url,omitempty"`
+	OrganizationsURL string `json:"organizations_url"`
 	// Полномочия
-	Permissions Permissions `json:"permissions,omitempty"`
+	Permissions Permissions `json:"permissions"`
 	// Url для получения репозиториев пользователя
-	ReposURL string `json:"repos_url,omitempty"`
+	ReposURL string `json:"repos_url"`
 	// Есть ли права админа
-	SiteAdmin bool `json:"site_admin,omitempty"`
+	SiteAdmin bool `json:"site_admin"`
 	// Url для получения репозиториев пользователя, которые были добавлены в избранное
-	StarredURL string `json:"starred_url,omitempty"`
+	StarredURL string `json:"starred_url"`
 	// Url для получения подписок пользователя
-	SubscriptionsURL string `json:"subscriptions_url,omitempty"`
+	SubscriptionsURL string `json:"subscriptions_url"`
 	// Тип пользователя
-	Type string `json:"type,omitempty"`
+	Type string `json:"type"`
 	// Url для получения пользователя
-	URL string `json:"url,omitempty"`
+	URL string `json:"url"`
 	// Вебсайт
-	Website string `json:"website,omitempty"`
+	Website string `json:"website"`
 }
 
 // CollaboratorInvitation maps the "response.CollaboratorInvitation" schema.
 type CollaboratorInvitation struct {
-	CreatedAt   string         `json:"created_at,omitempty"`
-	ID          int64          `json:"id,omitempty"`
-	Invitee     UserPublicInfo `json:"invitee,omitempty"`
-	Inviter     UserPublicInfo `json:"inviter,omitempty"`
-	Permissions string         `json:"permissions,omitempty"`
-	Repository  RepoPublicInfo `json:"repository,omitempty"`
+	CreatedAt   string         `json:"created_at"`
+	ID          int64          `json:"id"`
+	Invitee     UserPublicInfo `json:"invitee"`
+	Inviter     UserPublicInfo `json:"inviter"`
+	Permissions string         `json:"permissions"`
+	Repository  RepoPublicInfo `json:"repository"`
 }
 
 // Comment maps the "response.Comment" schema.
 type Comment struct {
-	AuthorAssociation string `json:"author_association,omitempty"`
-	Body              string `json:"body,omitempty"`
-	BodyHTML          string `json:"body_html,omitempty"`
-	BodyText          string `json:"body_text,omitempty"`
-	CreatedAt         string `json:"created_at,omitempty"`
+	AuthorAssociation string `json:"author_association"`
+	Body              string `json:"body"`
+	BodyHTML          string `json:"body_html"`
+	BodyText          string `json:"body_text"`
+	CreatedAt         string `json:"created_at"`
 	// HtmlURL points to the comment page.
-	HTMLURL string `json:"html_url,omitempty"`
-	ID      int64  `json:"id,omitempty"`
+	HTMLURL string `json:"html_url"`
+	ID      int64  `json:"id"`
 	// IssueURL points to the related issue or pull request.
-	IssueURL string `json:"issue_url,omitempty"`
+	IssueURL string `json:"issue_url"`
 	// NodeID is not used in GitVerse.
-	NodeID    string           `json:"node_id,omitempty"`
-	Reactions ReactionsSummary `json:"reactions,omitempty"`
-	UpdatedAt string           `json:"updated_at,omitempty"`
+	NodeID    string           `json:"node_id"`
+	Reactions ReactionsSummary `json:"reactions"`
+	UpdatedAt string           `json:"updated_at"`
 	// URL points to the comment resource.
-	URL  string         `json:"url,omitempty"`
-	User UserPublicInfo `json:"user,omitempty"`
+	URL  string         `json:"url"`
+	User UserPublicInfo `json:"user"`
 }
 
 // CommitFiles maps the "response.CommitFiles" schema.
 type CommitFiles struct {
-	Additions   int64  `json:"additions,omitempty"`
-	BlobURL     string `json:"blob_url,omitempty"`
-	Changes     int64  `json:"changes,omitempty"`
-	ContentsURL string `json:"contents_url,omitempty"`
-	Deletions   int64  `json:"deletions,omitempty"`
-	Filename    string `json:"filename,omitempty"`
-	Patch       string `json:"patch,omitempty"`
-	RawURL      string `json:"raw_url,omitempty"`
-	SHA         string `json:"sha,omitempty"`
-	Status      string `json:"status,omitempty"`
+	Additions   int64  `json:"additions"`
+	BlobURL     string `json:"blob_url"`
+	Changes     int64  `json:"changes"`
+	ContentsURL string `json:"contents_url"`
+	Deletions   int64  `json:"deletions"`
+	Filename    string `json:"filename"`
+	Patch       string `json:"patch"`
+	RawURL      string `json:"raw_url"`
+	SHA         string `json:"sha"`
+	Status      string `json:"status"`
 }
 
 // CommitMeta maps the "response.CommitMeta" schema.
 type CommitMeta struct {
-	Created string `json:"created,omitempty"`
-	HTMLURL string `json:"html_url,omitempty"`
-	SHA     string `json:"sha,omitempty"`
-	URL     string `json:"url,omitempty"`
+	Created string `json:"created"`
+	HTMLURL string `json:"html_url"`
+	SHA     string `json:"sha"`
+	URL     string `json:"url"`
 }
 
 // CommitResponse maps the "response.CommitResponse" schema.
 type CommitResponse struct {
-	Author       UserPublicInfo     `json:"author,omitempty"`
-	Branch       string             `json:"branch,omitempty"`
-	Commit       RepoCommit         `json:"commit,omitempty"`
-	Committer    UserPublicInfo     `json:"committer,omitempty"`
-	Created      string             `json:"created,omitempty"`
-	Files        []CommitFiles      `json:"files,omitempty"`
-	HTMLURL      string             `json:"html_url,omitempty"`
-	Parents      []CommitMeta       `json:"parents,omitempty"`
-	SHA          string             `json:"sha,omitempty"`
-	Stats        CommitStats        `json:"stats,omitempty"`
-	URL          string             `json:"url,omitempty"`
-	Verification CommitVerification `json:"verification,omitempty"`
+	Author       UserPublicInfo     `json:"author"`
+	Branch       string             `json:"branch"`
+	Commit       RepoCommit         `json:"commit"`
+	Committer    UserPublicInfo     `json:"committer"`
+	Created      string             `json:"created"`
+	Files        []CommitFiles      `json:"files"`
+	HTMLURL      string             `json:"html_url"`
+	Parents      []CommitMeta       `json:"parents"`
+	SHA          string             `json:"sha"`
+	Stats        CommitStats        `json:"stats"`
+	URL          string             `json:"url"`
+	Verification CommitVerification `json:"verification"`
 }
 
 // CommitStats maps the "response.CommitStats" schema.
 type CommitStats struct {
-	Additions int64 `json:"additions,omitempty"`
-	Deletions int64 `json:"deletions,omitempty"`
-	Total     int64 `json:"total,omitempty"`
+	Additions int64 `json:"additions"`
+	Deletions int64 `json:"deletions"`
+	Total     int64 `json:"total"`
 }
 
 // CommitUser maps the "response.CommitUser" schema.
 type CommitUser struct {
-	Date  string `json:"date,omitempty"`
-	Email string `json:"email,omitempty"`
-	Name  string `json:"name,omitempty"`
+	Date  string `json:"date"`
+	Email string `json:"email"`
+	Name  string `json:"name"`
 }
 
 // CommitUserRequest maps the "request.CommitUser" schema.
@@ -315,64 +315,64 @@ type CommitUserRequest struct {
 
 // CommitVerification maps the "response.CommitVerification" schema.
 type CommitVerification struct {
-	Payload    string `json:"payload,omitempty"`
-	Reason     string `json:"reason,omitempty"`
-	Signature  string `json:"signature,omitempty"`
-	Verified   bool   `json:"verified,omitempty"`
-	VerifiedAt string `json:"verifiedAt,omitempty"`
+	Payload    string `json:"payload"`
+	Reason     string `json:"reason"`
+	Signature  string `json:"signature"`
+	Verified   bool   `json:"verified"`
+	VerifiedAt string `json:"verifiedAt"`
 }
 
 // CompareResponse maps the "response.CompareResponse" schema.
 type CompareResponse struct {
-	AheadBy         int64            `json:"ahead_by,omitempty"`
-	BaseCommit      CommitResponse   `json:"base_commit,omitempty"`
-	BehindBy        int64            `json:"behind_by,omitempty"`
-	Commits         []CommitResponse `json:"commits,omitempty"`
-	Files           []CommitFiles    `json:"files,omitempty"`
-	HTMLURL         string           `json:"html_url,omitempty"`
-	MergeBaseCommit CommitResponse   `json:"merge_base_commit,omitempty"`
-	Status          string           `json:"status,omitempty"`
-	TotalCommits    int64            `json:"total_commits,omitempty"`
-	URL             string           `json:"url,omitempty"`
+	AheadBy         int64            `json:"ahead_by"`
+	BaseCommit      CommitResponse   `json:"base_commit"`
+	BehindBy        int64            `json:"behind_by"`
+	Commits         []CommitResponse `json:"commits"`
+	Files           []CommitFiles    `json:"files"`
+	HTMLURL         string           `json:"html_url"`
+	MergeBaseCommit CommitResponse   `json:"merge_base_commit"`
+	Status          string           `json:"status"`
+	TotalCommits    int64            `json:"total_commits"`
+	URL             string           `json:"url"`
 }
 
 // Config maps the "response.Config" schema.
 type Config struct {
-	AuthorizationHeader string `json:"authorization_header,omitempty"`
-	BranchFilter        string `json:"branch_filter,omitempty"`
-	ContentType         string `json:"content_type,omitempty"`
-	HTTPMethod          string `json:"http_method,omitempty"`
-	URL                 string `json:"url,omitempty"`
+	AuthorizationHeader string `json:"authorization_header"`
+	BranchFilter        string `json:"branch_filter"`
+	ContentType         string `json:"content_type"`
+	HTTPMethod          string `json:"http_method"`
+	URL                 string `json:"url"`
 }
 
 // ContentsResponse maps the "response.ContentsResponse" schema.
 type ContentsResponse struct {
 	// Ссылки
-	Links FileLinksResponse `json:"_links,omitempty"`
+	Links FileLinksResponse `json:"_links"`
 	// `content` is populated when `type` is `file`, otherwise null
-	Content string `json:"content,omitempty"`
+	Content string `json:"content"`
 	// DownloadURL ссылка на скачивание файла
-	DownloadURL string `json:"download_url,omitempty"`
+	DownloadURL string `json:"download_url"`
 	// `encoding` is populated when `type` is `file`, otherwise null
-	Encoding string `json:"encoding,omitempty"`
+	Encoding string `json:"encoding"`
 	// GitURL ссылка на получение файла
-	GitURL string `json:"git_url,omitempty"`
+	GitURL string `json:"git_url"`
 	// HtmlURL ссылка на страницу с содержимым файла
-	HTMLURL string `json:"html_url,omitempty"`
+	HTMLURL string `json:"html_url"`
 	// Язык программирования используемый в файле (если тип файл)
-	Language string `json:"language,omitempty"`
-	Name     string `json:"name,omitempty"`
-	Path     string `json:"path,omitempty"`
-	SHA      string `json:"sha,omitempty"`
-	Size     int64  `json:"size,omitempty"`
+	Language string `json:"language"`
+	Name     string `json:"name"`
+	Path     string `json:"path"`
+	SHA      string `json:"sha"`
+	Size     int64  `json:"size"`
 	// `submodule_git_url` is populated when `type` is `submodule`, otherwise null
-	SubmoduleGitURL string `json:"submodule_git_url,omitempty"`
+	SubmoduleGitURL string `json:"submodule_git_url"`
 	// `target` is populated when `type` is `symlink`, otherwise null
-	Target string `json:"target,omitempty"`
+	Target string `json:"target"`
 	// `type` will be `file`, `dir`, `symlink`, or `submodule`
-	Type string `json:"type,omitempty"`
+	Type string `json:"type"`
 	// Url возвращает ссылку на получение такого же JSON
-	URL string `json:"url,omitempty"`
+	URL string `json:"url"`
 }
 
 // CreateActionLinkOptionRequest maps the "request.CreateActionLinkOption" schema.
@@ -436,8 +436,8 @@ type CreateOrUpdateFileOptionsRequest struct {
 
 // CreateOrUpdateResponse maps the "response.CreateOrUpdateResponse" schema.
 type CreateOrUpdateResponse struct {
-	Commit  FileCommitResponse `json:"commit,omitempty"`
-	Content ContentsResponse   `json:"content,omitempty"`
+	Commit  FileCommitResponse `json:"commit"`
+	Content ContentsResponse   `json:"content"`
 }
 
 // CreateOrgRepoOptionRequest maps the "request.CreateOrgRepoOption" schema.
@@ -582,8 +582,8 @@ type DeleteFileOptionsRequest struct {
 
 // DeleteResponse maps the "response.DeleteResponse" schema.
 type DeleteResponse struct {
-	Commit  FileCommitResponse `json:"commit,omitempty"`
-	Content any                `json:"content,omitempty"`
+	Commit  FileCommitResponse `json:"commit"`
+	Content any                `json:"content"`
 }
 
 // EditReleaseOptionRequest maps the "request.EditReleaseOption" schema.
@@ -599,31 +599,31 @@ type EditReleaseOptionRequest struct {
 
 // EmailResponse maps the "response.EmailResponse" schema.
 type EmailResponse struct {
-	Email      string `json:"email,omitempty"`
-	Primary    bool   `json:"primary,omitempty"`
-	Verified   bool   `json:"verified,omitempty"`
-	Visibility string `json:"visibility,omitempty"`
+	Email      string `json:"email"`
+	Primary    bool   `json:"primary"`
+	Verified   bool   `json:"verified"`
+	Visibility string `json:"visibility"`
 }
 
 // FileCommitResponse maps the "response.FileCommitResponse" schema.
 type FileCommitResponse struct {
-	Author       CommitUser         `json:"author,omitempty"`
-	Committer    CommitUser         `json:"committer,omitempty"`
-	Created      string             `json:"created,omitempty"`
-	HTMLURL      string             `json:"html_url,omitempty"`
-	Message      string             `json:"message,omitempty"`
-	Parents      []CommitMeta       `json:"parents,omitempty"`
-	SHA          string             `json:"sha,omitempty"`
-	Tree         CommitMeta         `json:"tree,omitempty"`
-	URL          string             `json:"url,omitempty"`
-	Verification CommitVerification `json:"verification,omitempty"`
+	Author       CommitUser         `json:"author"`
+	Committer    CommitUser         `json:"committer"`
+	Created      string             `json:"created"`
+	HTMLURL      string             `json:"html_url"`
+	Message      string             `json:"message"`
+	Parents      []CommitMeta       `json:"parents"`
+	SHA          string             `json:"sha"`
+	Tree         CommitMeta         `json:"tree"`
+	URL          string             `json:"url"`
+	Verification CommitVerification `json:"verification"`
 }
 
 // FileLinksResponse maps the "response.FileLinksResponse" schema.
 type FileLinksResponse struct {
-	Git  string `json:"git,omitempty"`
-	HTML string `json:"html,omitempty"`
-	Self string `json:"self,omitempty"`
+	Git  string `json:"git"`
+	HTML string `json:"html"`
+	Self string `json:"self"`
 }
 
 // ForkRepoRequest maps the "request.ForkRepo" schema.
@@ -638,347 +638,347 @@ type ForkRepoRequest struct {
 
 // GitEntry maps the "response.GitEntry" schema.
 type GitEntry struct {
-	Mode string `json:"mode,omitempty"`
-	Path string `json:"path,omitempty"`
-	SHA  string `json:"sha,omitempty"`
-	Size int64  `json:"size,omitempty"`
-	Type string `json:"type,omitempty"`
-	URL  string `json:"url,omitempty"`
+	Mode string `json:"mode"`
+	Path string `json:"path"`
+	SHA  string `json:"sha"`
+	Size int64  `json:"size"`
+	Type string `json:"type"`
+	URL  string `json:"url"`
 }
 
 // GitObject maps the "response.GitObject" schema.
 type GitObject struct {
-	SHA  string `json:"sha,omitempty"`
-	Type string `json:"type,omitempty"`
-	URL  string `json:"url,omitempty"`
+	SHA  string `json:"sha"`
+	Type string `json:"type"`
+	URL  string `json:"url"`
 }
 
 // GitTreeResponse maps the "response.GitTreeResponse" schema.
 type GitTreeResponse struct {
-	Page       int64      `json:"page,omitempty"`
-	SHA        string     `json:"sha,omitempty"`
-	TotalCount int64      `json:"total_count,omitempty"`
-	Tree       []GitEntry `json:"tree,omitempty"`
-	Truncated  bool       `json:"truncated,omitempty"`
-	URL        string     `json:"url,omitempty"`
+	Page       int64      `json:"page"`
+	SHA        string     `json:"sha"`
+	TotalCount int64      `json:"total_count"`
+	Tree       []GitEntry `json:"tree"`
+	Truncated  bool       `json:"truncated"`
+	URL        string     `json:"url"`
 }
 
 // Issue maps the "response.Issue" schema.
 type Issue struct {
-	Assets           []Attachment    `json:"assets,omitempty"`
-	Assignee         User            `json:"assignee,omitempty"`
-	Assignees        []User          `json:"assignees,omitempty"`
-	Body             string          `json:"body,omitempty"`
-	ClosedAt         string          `json:"closed_at,omitempty"`
-	Comments         int64           `json:"comments,omitempty"`
-	CommentsURL      string          `json:"comments_url,omitempty"`
-	CreatedAt        string          `json:"created_at,omitempty"`
-	Draft            bool            `json:"draft,omitempty"`
-	DueDate          string          `json:"due_date,omitempty"`
-	EventsURL        string          `json:"events_url,omitempty"`
-	HTMLURL          string          `json:"html_url,omitempty"`
-	ID               int64           `json:"id,omitempty"`
-	IsLocked         bool            `json:"is_locked,omitempty"`
-	Labels           []Label         `json:"labels,omitempty"`
-	LabelsURL        string          `json:"labels_url,omitempty"`
-	Milestone        Milestone       `json:"milestone,omitempty"`
-	NodeID           string          `json:"node_id,omitempty"`
-	Number           int64           `json:"number,omitempty"`
-	OriginalAuthor   string          `json:"original_author,omitempty"`
-	OriginalAuthorID int64           `json:"original_author_id,omitempty"`
-	PullRequest      PullRequestMeta `json:"pull_request,omitempty"`
-	Ref              string          `json:"ref,omitempty"`
-	Repository       RepositoryMeta  `json:"repository,omitempty"`
-	RepositoryURL    string          `json:"repository_url,omitempty"`
-	State            string          `json:"state,omitempty"`
-	TimelineURL      string          `json:"timeline_url,omitempty"`
-	Title            string          `json:"title,omitempty"`
-	Type             IssueType       `json:"type,omitempty"`
-	UpdatedAt        string          `json:"updated_at,omitempty"`
-	URL              string          `json:"url,omitempty"`
-	User             User            `json:"user,omitempty"`
+	Assets           []Attachment    `json:"assets"`
+	Assignee         User            `json:"assignee"`
+	Assignees        []User          `json:"assignees"`
+	Body             string          `json:"body"`
+	ClosedAt         string          `json:"closed_at"`
+	Comments         int64           `json:"comments"`
+	CommentsURL      string          `json:"comments_url"`
+	CreatedAt        string          `json:"created_at"`
+	Draft            bool            `json:"draft"`
+	DueDate          string          `json:"due_date"`
+	EventsURL        string          `json:"events_url"`
+	HTMLURL          string          `json:"html_url"`
+	ID               int64           `json:"id"`
+	IsLocked         bool            `json:"is_locked"`
+	Labels           []Label         `json:"labels"`
+	LabelsURL        string          `json:"labels_url"`
+	Milestone        Milestone       `json:"milestone"`
+	NodeID           string          `json:"node_id"`
+	Number           int64           `json:"number"`
+	OriginalAuthor   string          `json:"original_author"`
+	OriginalAuthorID int64           `json:"original_author_id"`
+	PullRequest      PullRequestMeta `json:"pull_request"`
+	Ref              string          `json:"ref"`
+	Repository       RepositoryMeta  `json:"repository"`
+	RepositoryURL    string          `json:"repository_url"`
+	State            string          `json:"state"`
+	TimelineURL      string          `json:"timeline_url"`
+	Title            string          `json:"title"`
+	Type             IssueType       `json:"type"`
+	UpdatedAt        string          `json:"updated_at"`
+	URL              string          `json:"url"`
+	User             User            `json:"user"`
 }
 
 // IssueType maps the "response.IssueType" schema.
 type IssueType struct {
-	Code  string `json:"code,omitempty"`
-	Color string `json:"color,omitempty"`
-	ID    int64  `json:"id,omitempty"`
-	Name  string `json:"name,omitempty"`
+	Code  string `json:"code"`
+	Color string `json:"color"`
+	ID    int64  `json:"id"`
+	Name  string `json:"name"`
 }
 
 // JobsResponse maps the "response.JobsResponse" schema.
 type JobsResponse struct {
-	Jobs       []ActionRunJob `json:"jobs,omitempty"`
-	TotalCount int64          `json:"total_count,omitempty"`
+	Jobs       []ActionRunJob `json:"jobs"`
+	TotalCount int64          `json:"total_count"`
 }
 
 // Label maps the "response.Label" schema.
 type Label struct {
 	// example: 00aabb
-	Color       string `json:"color,omitempty"`
-	Description string `json:"description,omitempty"`
+	Color       string `json:"color"`
+	Description string `json:"description"`
 	// example: false
-	Exclusive bool  `json:"exclusive,omitempty"`
-	ID        int64 `json:"id,omitempty"`
+	Exclusive bool  `json:"exclusive"`
+	ID        int64 `json:"id"`
 	// example: false
-	IsArchived bool   `json:"is_archived,omitempty"`
-	Name       string `json:"name,omitempty"`
-	URL        string `json:"url,omitempty"`
+	IsArchived bool   `json:"is_archived"`
+	Name       string `json:"name"`
+	URL        string `json:"url"`
 }
 
 // Milestone maps the "response.Milestone" schema.
 type Milestone struct {
-	ClosedAt     string `json:"closed_at,omitempty"`
-	ClosedIssues int64  `json:"closed_issues,omitempty"`
-	CreatedAt    string `json:"created_at,omitempty"`
-	Description  string `json:"description,omitempty"`
-	DueOn        string `json:"due_on,omitempty"`
-	ID           int64  `json:"id,omitempty"`
-	OpenIssues   int64  `json:"open_issues,omitempty"`
-	State        string `json:"state,omitempty"`
-	Title        string `json:"title,omitempty"`
-	UpdatedAt    string `json:"updated_at,omitempty"`
+	ClosedAt     string `json:"closed_at"`
+	ClosedIssues int64  `json:"closed_issues"`
+	CreatedAt    string `json:"created_at"`
+	Description  string `json:"description"`
+	DueOn        string `json:"due_on"`
+	ID           int64  `json:"id"`
+	OpenIssues   int64  `json:"open_issues"`
+	State        string `json:"state"`
+	Title        string `json:"title"`
+	UpdatedAt    string `json:"updated_at"`
 }
 
 // PRBranchInfo maps the "response.PRBranchInfo" schema.
 type PRBranchInfo struct {
-	Label  string     `json:"label,omitempty"`
-	Ref    string     `json:"ref,omitempty"`
-	Repo   Repository `json:"repo,omitempty"`
-	RepoID int64      `json:"repo_id,omitempty"`
-	SHA    string     `json:"sha,omitempty"`
+	Label  string     `json:"label"`
+	Ref    string     `json:"ref"`
+	Repo   Repository `json:"repo"`
+	RepoID int64      `json:"repo_id"`
+	SHA    string     `json:"sha"`
 }
 
 // PackageVersion maps the "response.PackageVersion" schema.
 type PackageVersion struct {
-	CreatedAt      string                 `json:"created_at,omitempty"`
-	Description    string                 `json:"description,omitempty"`
-	HTMLURL        string                 `json:"html_url,omitempty"`
-	ID             int64                  `json:"id,omitempty"`
-	License        string                 `json:"license,omitempty"`
-	Metadata       PackageVersionMetadata `json:"metadata,omitempty"`
-	Name           string                 `json:"name,omitempty"`
-	PackageHTMLURL string                 `json:"package_html_url,omitempty"`
-	URL            string                 `json:"url,omitempty"`
+	CreatedAt      string                 `json:"created_at"`
+	Description    string                 `json:"description"`
+	HTMLURL        string                 `json:"html_url"`
+	ID             int64                  `json:"id"`
+	License        string                 `json:"license"`
+	Metadata       PackageVersionMetadata `json:"metadata"`
+	Name           string                 `json:"name"`
+	PackageHTMLURL string                 `json:"package_html_url"`
+	URL            string                 `json:"url"`
 }
 
 // PackageVersionMetadata maps the "response.PackageVersionMetadata" schema.
 type PackageVersionMetadata struct {
-	PackageType string `json:"package_type,omitempty"`
+	PackageType string `json:"package_type"`
 }
 
 // PagesDeployment maps the "response.PagesDeployment" schema.
 type PagesDeployment struct {
-	ID        int64  `json:"id,omitempty"`
-	PageURL   string `json:"page_url,omitempty"`
-	StatusURL string `json:"status_url,omitempty"`
+	ID        int64  `json:"id"`
+	PageURL   string `json:"page_url"`
+	StatusURL string `json:"status_url"`
 }
 
 // PagesDeploymentStatus maps the "response.PagesDeploymentStatus" schema.
 type PagesDeploymentStatus struct {
 	// Values: unknown, need_build, building, need_publishing, publishing, published, need_unpublish, unpublished, error_building, error_publishing, error_unpublish
-	Status string `json:"status,omitempty"`
+	Status string `json:"status"`
 }
 
 // Permissions maps the "response.Permissions" schema.
 type Permissions struct {
-	Admin bool `json:"admin,omitempty"`
-	Pull  bool `json:"pull,omitempty"`
-	Push  bool `json:"push,omitempty"`
+	Admin bool `json:"admin"`
+	Pull  bool `json:"pull"`
+	Push  bool `json:"push"`
 }
 
 // PullRequest maps the "response.PullRequest" schema.
 type PullRequest struct {
-	Assignee            User         `json:"assignee,omitempty"`
-	Assignees           []User       `json:"assignees,omitempty"`
-	Base                PRBranchInfo `json:"base,omitempty"`
-	Body                string       `json:"body,omitempty"`
-	ClosedAt            string       `json:"closed_at,omitempty"`
-	Comments            int64        `json:"comments,omitempty"`
-	CreatedAt           string       `json:"created_at,omitempty"`
-	DiffURL             string       `json:"diff_url,omitempty"`
-	Head                PRBranchInfo `json:"head,omitempty"`
-	HTMLURL             string       `json:"html_url,omitempty"`
-	ID                  int64        `json:"id,omitempty"`
-	IsDraft             bool         `json:"is_draft,omitempty"`
-	Labels              []Label      `json:"labels,omitempty"`
-	Locked              bool         `json:"locked,omitempty"`
-	MaintainerCanModify bool         `json:"maintainer_can_modify,omitempty"`
-	MergeCommitSHA      string       `json:"merge_commit_sha,omitempty"`
-	Mergeable           bool         `json:"mergeable,omitempty"`
-	Merged              bool         `json:"merged,omitempty"`
-	MergedAt            string       `json:"merged_at,omitempty"`
-	MergedBy            User         `json:"merged_by,omitempty"`
-	Milestone           Milestone    `json:"milestone,omitempty"`
-	Number              int64        `json:"number,omitempty"`
-	PatchURL            string       `json:"patch_url,omitempty"`
-	RequestedReviewers  []User       `json:"requested_reviewers,omitempty"`
-	RequestedTeams      []Team       `json:"requested_teams,omitempty"`
-	State               string       `json:"state,omitempty"`
-	Title               string       `json:"title,omitempty"`
-	UpdatedAt           string       `json:"updated_at,omitempty"`
-	URL                 string       `json:"url,omitempty"`
-	User                User         `json:"user,omitempty"`
+	Assignee            User         `json:"assignee"`
+	Assignees           []User       `json:"assignees"`
+	Base                PRBranchInfo `json:"base"`
+	Body                string       `json:"body"`
+	ClosedAt            string       `json:"closed_at"`
+	Comments            int64        `json:"comments"`
+	CreatedAt           string       `json:"created_at"`
+	DiffURL             string       `json:"diff_url"`
+	Head                PRBranchInfo `json:"head"`
+	HTMLURL             string       `json:"html_url"`
+	ID                  int64        `json:"id"`
+	IsDraft             bool         `json:"is_draft"`
+	Labels              []Label      `json:"labels"`
+	Locked              bool         `json:"locked"`
+	MaintainerCanModify bool         `json:"maintainer_can_modify"`
+	MergeCommitSHA      string       `json:"merge_commit_sha"`
+	Mergeable           bool         `json:"mergeable"`
+	Merged              bool         `json:"merged"`
+	MergedAt            string       `json:"merged_at"`
+	MergedBy            User         `json:"merged_by"`
+	Milestone           Milestone    `json:"milestone"`
+	Number              int64        `json:"number"`
+	PatchURL            string       `json:"patch_url"`
+	RequestedReviewers  []User       `json:"requested_reviewers"`
+	RequestedTeams      []Team       `json:"requested_teams"`
+	State               string       `json:"state"`
+	Title               string       `json:"title"`
+	UpdatedAt           string       `json:"updated_at"`
+	URL                 string       `json:"url"`
+	User                User         `json:"user"`
 }
 
 // PullRequestMeta maps the "response.PullRequestMeta" schema.
 type PullRequestMeta struct {
-	DiffURL  string `json:"diff_url,omitempty"`
-	Draft    bool   `json:"draft,omitempty"`
-	HTMLURL  string `json:"html_url,omitempty"`
-	Merged   bool   `json:"merged,omitempty"`
-	MergedAt string `json:"merged_at,omitempty"`
-	PatchURL string `json:"patch_url,omitempty"`
-	URL      string `json:"url,omitempty"`
+	DiffURL  string `json:"diff_url"`
+	Draft    bool   `json:"draft"`
+	HTMLURL  string `json:"html_url"`
+	Merged   bool   `json:"merged"`
+	MergedAt string `json:"merged_at"`
+	PatchURL string `json:"patch_url"`
+	URL      string `json:"url"`
 }
 
 // Reaction maps the "response.Reaction" schema.
 type Reaction struct {
-	Content   string         `json:"content,omitempty"`
-	CreatedAt string         `json:"created_at,omitempty"`
-	ID        int64          `json:"id,omitempty"`
-	User      UserPublicInfo `json:"user,omitempty"`
+	Content   string         `json:"content"`
+	CreatedAt string         `json:"created_at"`
+	ID        int64          `json:"id"`
+	User      UserPublicInfo `json:"user"`
 }
 
 // ReactionsSummary maps the "response.ReactionsSummary" schema.
 type ReactionsSummary struct {
-	Plus1      int64  `json:"+1,omitempty"`
-	Minus1     int64  `json:"-1,omitempty"`
-	Confused   int64  `json:"confused,omitempty"`
-	Eyes       int64  `json:"eyes,omitempty"`
-	Heart      int64  `json:"heart,omitempty"`
-	Hooray     int64  `json:"hooray,omitempty"`
-	Laugh      int64  `json:"laugh,omitempty"`
-	Rocket     int64  `json:"rocket,omitempty"`
-	TotalCount int64  `json:"total_count,omitempty"`
-	URL        string `json:"url,omitempty"`
+	Plus1      int64  `json:"+1"`
+	Minus1     int64  `json:"-1"`
+	Confused   int64  `json:"confused"`
+	Eyes       int64  `json:"eyes"`
+	Heart      int64  `json:"heart"`
+	Hooray     int64  `json:"hooray"`
+	Laugh      int64  `json:"laugh"`
+	Rocket     int64  `json:"rocket"`
+	TotalCount int64  `json:"total_count"`
+	URL        string `json:"url"`
 }
 
 // Reference maps the "response.Reference" schema.
 type Reference struct {
-	Object GitObject `json:"object,omitempty"`
-	Ref    string    `json:"ref,omitempty"`
-	URL    string    `json:"url,omitempty"`
+	Object GitObject `json:"object"`
+	Ref    string    `json:"ref"`
+	URL    string    `json:"url"`
 }
 
 // RegistrationToken maps the "response.RegistrationToken" schema.
 type RegistrationToken struct {
-	Token string `json:"token,omitempty"`
+	Token string `json:"token"`
 }
 
 // Release maps the "response.Release" schema.
 type Release struct {
-	Assets           []Attachment `json:"assets,omitempty"`
-	Author           User         `json:"author,omitempty"`
-	Body             string       `json:"body,omitempty"`
-	CreatedAt        string       `json:"created_at,omitempty"`
-	Draft            bool         `json:"draft,omitempty"`
-	HTMLURL          string       `json:"html_url,omitempty"`
-	ID               int64        `json:"id,omitempty"`
-	IsAuthorizedOnly bool         `json:"is_authorized_only,omitempty"`
-	Name             string       `json:"name,omitempty"`
-	Prerelease       bool         `json:"prerelease,omitempty"`
-	PublishedAt      string       `json:"published_at,omitempty"`
-	TagName          string       `json:"tag_name,omitempty"`
-	TarballURL       string       `json:"tarball_url,omitempty"`
-	TargetCommitish  string       `json:"target_commitish,omitempty"`
-	UploadURL        string       `json:"upload_url,omitempty"`
-	URL              string       `json:"url,omitempty"`
-	ZipballURL       string       `json:"zipball_url,omitempty"`
+	Assets           []Attachment `json:"assets"`
+	Author           User         `json:"author"`
+	Body             string       `json:"body"`
+	CreatedAt        string       `json:"created_at"`
+	Draft            bool         `json:"draft"`
+	HTMLURL          string       `json:"html_url"`
+	ID               int64        `json:"id"`
+	IsAuthorizedOnly bool         `json:"is_authorized_only"`
+	Name             string       `json:"name"`
+	Prerelease       bool         `json:"prerelease"`
+	PublishedAt      string       `json:"published_at"`
+	TagName          string       `json:"tag_name"`
+	TarballURL       string       `json:"tarball_url"`
+	TargetCommitish  string       `json:"target_commitish"`
+	UploadURL        string       `json:"upload_url"`
+	URL              string       `json:"url"`
+	ZipballURL       string       `json:"zipball_url"`
 }
 
 // RepoCommit maps the "response.RepoCommit" schema.
 type RepoCommit struct {
-	Author    CommitUser `json:"author,omitempty"`
-	Committer CommitUser `json:"committer,omitempty"`
-	Message   string     `json:"message,omitempty"`
-	Tree      TreeMeta   `json:"tree,omitempty"`
-	URL       string     `json:"url,omitempty"`
+	Author    CommitUser `json:"author"`
+	Committer CommitUser `json:"committer"`
+	Message   string     `json:"message"`
+	Tree      TreeMeta   `json:"tree"`
+	URL       string     `json:"url"`
 }
 
 // RepoPublicInfo maps the "response.RepoPublicInfo" schema.
 type RepoPublicInfo struct {
-	ContentsURL     string         `json:"contents_url,omitempty"`
-	Description     string         `json:"description,omitempty"`
-	Fork            bool           `json:"fork,omitempty"`
-	ForksURL        string         `json:"forks_url,omitempty"`
-	FullName        string         `json:"full_name,omitempty"`
-	HTMLURL         string         `json:"html_url,omitempty"`
-	ID              int64          `json:"id,omitempty"`
-	IssueCommentURL string         `json:"issue_comment_url,omitempty"`
-	IssuesURL       string         `json:"issues_url,omitempty"`
-	LanguagesURL    string         `json:"languages_url,omitempty"`
-	Name            string         `json:"name,omitempty"`
-	Owner           UserPublicInfo `json:"owner,omitempty"`
-	Private         bool           `json:"private,omitempty"`
-	PullsURL        string         `json:"pulls_url,omitempty"`
-	URL             string         `json:"url,omitempty"`
+	ContentsURL     string         `json:"contents_url"`
+	Description     string         `json:"description"`
+	Fork            bool           `json:"fork"`
+	ForksURL        string         `json:"forks_url"`
+	FullName        string         `json:"full_name"`
+	HTMLURL         string         `json:"html_url"`
+	ID              int64          `json:"id"`
+	IssueCommentURL string         `json:"issue_comment_url"`
+	IssuesURL       string         `json:"issues_url"`
+	LanguagesURL    string         `json:"languages_url"`
+	Name            string         `json:"name"`
+	Owner           UserPublicInfo `json:"owner"`
+	Private         bool           `json:"private"`
+	PullsURL        string         `json:"pulls_url"`
+	URL             string         `json:"url"`
 }
 
 // RepoTree maps the "response.RepoTree" schema.
 type RepoTree struct {
-	SHA       string      `json:"sha,omitempty"`
-	Tree      []TreeEntry `json:"tree,omitempty"`
-	Truncated bool        `json:"truncated,omitempty"`
-	URL       string      `json:"url,omitempty"`
+	SHA       string      `json:"sha"`
+	Tree      []TreeEntry `json:"tree"`
+	Truncated bool        `json:"truncated"`
+	URL       string      `json:"url"`
 }
 
 // Repository maps the "response.Repository" schema.
 type Repository struct {
-	AllowMergeCommit    bool           `json:"allow_merge_commit,omitempty"`
-	AllowRebaseMerge    bool           `json:"allow_rebase_merge,omitempty"`
-	AllowSquashMerge    bool           `json:"allow_squash_merge,omitempty"`
-	Archived            bool           `json:"archived,omitempty"`
-	CloneURL            string         `json:"clone_url,omitempty"`
-	ContentsURL         string         `json:"contents_url,omitempty"`
-	CreatedAt           string         `json:"created_at,omitempty"`
-	DefaultBranch       string         `json:"default_branch,omitempty"`
-	DeleteBranchOnMerge bool           `json:"delete_branch_on_merge,omitempty"`
-	Description         string         `json:"description,omitempty"`
-	Disabled            bool           `json:"disabled,omitempty"`
-	Fork                bool           `json:"fork,omitempty"`
-	Forks               int64          `json:"forks,omitempty"`
-	ForksCount          int64          `json:"forks_count,omitempty"`
-	ForksURL            string         `json:"forks_url,omitempty"`
-	FullName            string         `json:"full_name,omitempty"`
-	HasIssues           bool           `json:"has_issues,omitempty"`
-	HasWiki             bool           `json:"has_wiki,omitempty"`
-	HTMLURL             string         `json:"html_url,omitempty"`
-	ID                  int64          `json:"id,omitempty"`
-	IsTemplate          bool           `json:"is_template,omitempty"`
-	IssueCommentURL     string         `json:"issue_comment_url,omitempty"`
-	IssuesURL           string         `json:"issues_url,omitempty"`
-	Language            string         `json:"language,omitempty"`
-	LanguagesURL        string         `json:"languages_url,omitempty"`
-	MirrorURL           string         `json:"mirror_url,omitempty"`
-	Name                string         `json:"name,omitempty"`
-	OpenIssues          int64          `json:"open_issues,omitempty"`
-	OpenIssuesCount     int64          `json:"open_issues_count,omitempty"`
-	Owner               UserPublicInfo `json:"owner,omitempty"`
-	Parent              *Repository    `json:"parent,omitempty"`
-	Permissions         Permissions    `json:"permissions,omitempty"`
-	Private             bool           `json:"private,omitempty"`
-	PullsURL            string         `json:"pulls_url,omitempty"`
-	PushedAt            string         `json:"pushed_at,omitempty"`
-	Size                int64          `json:"size,omitempty"`
-	SSHURL              string         `json:"ssh_url,omitempty"`
-	StargazersCount     int64          `json:"stargazers_count,omitempty"`
-	TemplateRepository  *Repository    `json:"template_repository,omitempty"`
-	Topics              []string       `json:"topics,omitempty"`
-	UpdatedAt           string         `json:"updated_at,omitempty"`
-	URL                 string         `json:"url,omitempty"`
-	Visibility          string         `json:"visibility,omitempty"`
-	Watchers            int64          `json:"watchers,omitempty"`
-	WatchersCount       int64          `json:"watchers_count,omitempty"`
+	AllowMergeCommit    bool           `json:"allow_merge_commit"`
+	AllowRebaseMerge    bool           `json:"allow_rebase_merge"`
+	AllowSquashMerge    bool           `json:"allow_squash_merge"`
+	Archived            bool           `json:"archived"`
+	CloneURL            string         `json:"clone_url"`
+	ContentsURL         string         `json:"contents_url"`
+	CreatedAt           string         `json:"created_at"`
+	DefaultBranch       string         `json:"default_branch"`
+	DeleteBranchOnMerge bool           `json:"delete_branch_on_merge"`
+	Description         string         `json:"description"`
+	Disabled            bool           `json:"disabled"`
+	Fork                bool           `json:"fork"`
+	Forks               int64          `json:"forks"`
+	ForksCount          int64          `json:"forks_count"`
+	ForksURL            string         `json:"forks_url"`
+	FullName            string         `json:"full_name"`
+	HasIssues           bool           `json:"has_issues"`
+	HasWiki             bool           `json:"has_wiki"`
+	HTMLURL             string         `json:"html_url"`
+	ID                  int64          `json:"id"`
+	IsTemplate          bool           `json:"is_template"`
+	IssueCommentURL     string         `json:"issue_comment_url"`
+	IssuesURL           string         `json:"issues_url"`
+	Language            string         `json:"language"`
+	LanguagesURL        string         `json:"languages_url"`
+	MirrorURL           string         `json:"mirror_url"`
+	Name                string         `json:"name"`
+	OpenIssues          int64          `json:"open_issues"`
+	OpenIssuesCount     int64          `json:"open_issues_count"`
+	Owner               UserPublicInfo `json:"owner"`
+	Parent              *Repository    `json:"parent"`
+	Permissions         Permissions    `json:"permissions"`
+	Private             bool           `json:"private"`
+	PullsURL            string         `json:"pulls_url"`
+	PushedAt            string         `json:"pushed_at"`
+	Size                int64          `json:"size"`
+	SSHURL              string         `json:"ssh_url"`
+	StargazersCount     int64          `json:"stargazers_count"`
+	TemplateRepository  *Repository    `json:"template_repository"`
+	Topics              []string       `json:"topics"`
+	UpdatedAt           string         `json:"updated_at"`
+	URL                 string         `json:"url"`
+	Visibility          string         `json:"visibility"`
+	Watchers            int64          `json:"watchers"`
+	WatchersCount       int64          `json:"watchers_count"`
 }
 
 // RepositoryMeta maps the "response.RepositoryMeta" schema.
 type RepositoryMeta struct {
-	FullName string `json:"full_name,omitempty"`
-	ID       int64  `json:"id,omitempty"`
-	Name     string `json:"name,omitempty"`
-	Owner    string `json:"owner,omitempty"`
+	FullName string `json:"full_name"`
+	ID       int64  `json:"id"`
+	Name     string `json:"name"`
+	Owner    string `json:"owner"`
 }
 
 // RepositoryUpdateDTORequest maps the "request.RepositoryUpdateDTO" schema.
@@ -1006,50 +1006,50 @@ type RepositoryUpdateDTORequest struct {
 
 // RunsResponse maps the "response.RunsResponse" schema.
 type RunsResponse struct {
-	TotalCount   int64       `json:"total_count,omitempty"`
-	WorkflowRuns []ActionRun `json:"workflow_runs,omitempty"`
+	TotalCount   int64       `json:"total_count"`
+	WorkflowRuns []ActionRun `json:"workflow_runs"`
 }
 
 // Secret maps the "response.Secret" schema.
 type Secret struct {
-	CreatedAt string `json:"created_at,omitempty"`
-	Name      string `json:"name,omitempty"`
+	CreatedAt string `json:"created_at"`
+	Name      string `json:"name"`
 }
 
 // SecretList maps the "response.SecretList" schema.
 type SecretList struct {
-	Secrets    []Secret `json:"secrets,omitempty"`
-	TotalCount int64    `json:"total_count,omitempty"`
+	Secrets    []Secret `json:"secrets"`
+	TotalCount int64    `json:"total_count"`
 }
 
 // Team maps the "response.Team" schema.
 type Team struct {
 	// Полномочия на создание репозиториев
-	CanCreateOrgRepo bool `json:"can_create_org_repo,omitempty"`
+	CanCreateOrgRepo bool `json:"can_create_org_repo"`
 	// Описание команды
-	Description string `json:"description,omitempty"`
+	Description string `json:"description"`
 	// Идентификатор
-	ID int64 `json:"id,omitempty"`
+	ID int64 `json:"id"`
 	// Включает все репозитории
-	IncludesAllRepositories bool `json:"includes_all_repositories,omitempty"`
+	IncludesAllRepositories bool `json:"includes_all_repositories"`
 	// Название команды
-	Name string `json:"name,omitempty"`
+	Name string `json:"name"`
 	// Количество участников
-	NumMembers int64 `json:"num_members,omitempty"`
+	NumMembers int64 `json:"num_members"`
 	// Количество репозиториев
-	NumRepos int64 `json:"num_repos,omitempty"`
+	NumRepos int64 `json:"num_repos"`
 	// Полномочия
-	Permission string `json:"permission,omitempty"`
+	Permission string `json:"permission"`
 	// Полномочие на действия с ветками
-	PermissionActions string `json:"permission_actions,omitempty"`
+	PermissionActions string `json:"permission_actions"`
 	// Код полномочия
-	PermissionCode string `json:"permission_code,omitempty"`
+	PermissionCode string `json:"permission_code"`
 	// Полномочие на пакеты
-	PermissionPackages string `json:"permission_packages,omitempty"`
+	PermissionPackages string `json:"permission_packages"`
 	// Полномочие на отправку пулл-реквестов
-	PermissionPulls string `json:"permission_pulls,omitempty"`
+	PermissionPulls string `json:"permission_pulls"`
 	// Полномочие на релизы
-	PermissionReleases string `json:"permission_releases,omitempty"`
+	PermissionReleases string `json:"permission_releases"`
 }
 
 // TeamRepoPermissionsRequest maps the "request.TeamRepoPermissions" schema.
@@ -1059,64 +1059,64 @@ type TeamRepoPermissionsRequest struct {
 
 // TimelineComment maps the "response.TimelineComment" schema.
 type TimelineComment struct {
-	Assignee     User   `json:"assignee,omitempty"`
-	AssigneeTeam Team   `json:"assignee_team,omitempty"`
-	Body         string `json:"body,omitempty"`
+	Assignee     User   `json:"assignee"`
+	AssigneeTeam Team   `json:"assignee_team"`
+	Body         string `json:"body"`
 	// swagger:strfmt date-time
-	CreatedAt      string    `json:"created_at,omitempty"`
-	DependentIssue Issue     `json:"dependent_issue,omitempty"`
-	HTMLURL        string    `json:"html_url,omitempty"`
-	ID             int64     `json:"id,omitempty"`
-	IssueURL       string    `json:"issue_url,omitempty"`
-	Label          Label     `json:"label,omitempty"`
-	Milestone      Milestone `json:"milestone,omitempty"`
-	NewRef         string    `json:"new_ref,omitempty"`
-	NewTitle       string    `json:"new_title,omitempty"`
-	OldMilestone   Milestone `json:"old_milestone,omitempty"`
-	OldProjectID   int64     `json:"old_project_id,omitempty"`
-	OldRef         string    `json:"old_ref,omitempty"`
-	OldTitle       string    `json:"old_title,omitempty"`
-	ProjectID      int64     `json:"project_id,omitempty"`
-	PullRequestURL string    `json:"pull_request_url,omitempty"`
-	RefAction      string    `json:"ref_action,omitempty"`
-	RefComment     Comment   `json:"ref_comment,omitempty"`
+	CreatedAt      string    `json:"created_at"`
+	DependentIssue Issue     `json:"dependent_issue"`
+	HTMLURL        string    `json:"html_url"`
+	ID             int64     `json:"id"`
+	IssueURL       string    `json:"issue_url"`
+	Label          Label     `json:"label"`
+	Milestone      Milestone `json:"milestone"`
+	NewRef         string    `json:"new_ref"`
+	NewTitle       string    `json:"new_title"`
+	OldMilestone   Milestone `json:"old_milestone"`
+	OldProjectID   int64     `json:"old_project_id"`
+	OldRef         string    `json:"old_ref"`
+	OldTitle       string    `json:"old_title"`
+	ProjectID      int64     `json:"project_id"`
+	PullRequestURL string    `json:"pull_request_url"`
+	RefAction      string    `json:"ref_action"`
+	RefComment     Comment   `json:"ref_comment"`
 	// commit SHA where issue/PR was referenced
-	RefCommitSHA string `json:"ref_commit_sha,omitempty"`
-	RefIssue     Issue  `json:"ref_issue,omitempty"`
+	RefCommitSHA string `json:"ref_commit_sha"`
+	RefIssue     Issue  `json:"ref_issue"`
 	// whether the assignees were removed or added
-	RemovedAssignee bool        `json:"removed_assignee,omitempty"`
-	ResolveDoer     User        `json:"resolve_doer,omitempty"`
-	ReviewID        int64       `json:"review_id,omitempty"`
-	TrackedTime     TrackedTime `json:"tracked_time,omitempty"`
-	Type            string      `json:"type,omitempty"`
+	RemovedAssignee bool        `json:"removed_assignee"`
+	ResolveDoer     User        `json:"resolve_doer"`
+	ReviewID        int64       `json:"review_id"`
+	TrackedTime     TrackedTime `json:"tracked_time"`
+	Type            string      `json:"type"`
 	// swagger:strfmt date-time
-	UpdatedAt string `json:"updated_at,omitempty"`
-	User      User   `json:"user,omitempty"`
+	UpdatedAt string `json:"updated_at"`
+	User      User   `json:"user"`
 }
 
 // TrackedTime maps the "response.TrackedTime" schema.
 type TrackedTime struct {
 	// swagger:strfmt date-time
-	Created string `json:"created,omitempty"`
-	ID      int64  `json:"id,omitempty"`
-	Issue   Issue  `json:"issue,omitempty"`
+	Created string `json:"created"`
+	ID      int64  `json:"id"`
+	Issue   Issue  `json:"issue"`
 	// deprecated (only for backwards compatibility)
-	IssueID int64 `json:"issue_id,omitempty"`
+	IssueID int64 `json:"issue_id"`
 	// Time in seconds
-	Time int64 `json:"time,omitempty"`
+	Time int64 `json:"time"`
 	// deprecated (only for backwards compatibility)
-	UserID   int64  `json:"user_id,omitempty"`
-	UserName string `json:"user_name,omitempty"`
+	UserID   int64  `json:"user_id"`
+	UserName string `json:"user_name"`
 }
 
 // TreeEntry maps the "response.TreeEntry" schema.
 type TreeEntry struct {
-	Mode string `json:"mode,omitempty"`
-	Path string `json:"path,omitempty"`
-	SHA  string `json:"sha,omitempty"`
-	Size int64  `json:"size,omitempty"`
+	Mode string `json:"mode"`
+	Path string `json:"path"`
+	SHA  string `json:"sha"`
+	Size int64  `json:"size"`
 	// "blob", "tree", "commit"
-	Type string `json:"type,omitempty"`
+	Type string `json:"type"`
 }
 
 // TreeItemRequest maps the "request.TreeItem" schema.
@@ -1130,9 +1130,9 @@ type TreeItemRequest struct {
 
 // TreeMeta maps the "response.TreeMeta" schema.
 type TreeMeta struct {
-	Created string `json:"created,omitempty"`
-	SHA     string `json:"sha,omitempty"`
-	URL     string `json:"url,omitempty"`
+	Created string `json:"created"`
+	SHA     string `json:"sha"`
+	URL     string `json:"url"`
 }
 
 // UpdateBranchRequest maps the "request.UpdateBranchRequest" schema.
@@ -1142,8 +1142,8 @@ type UpdateBranchRequest struct {
 
 // UpdateBranchResponse maps the "response.UpdateBranchResponse" schema.
 type UpdateBranchResponse struct {
-	Message string `json:"message,omitempty"`
-	URL     string `json:"url,omitempty"`
+	Message string `json:"message"`
+	URL     string `json:"url"`
 }
 
 // UpdateIssueCommentRequest maps the "request.UpdateIssueComment" schema.
@@ -1197,119 +1197,119 @@ type UpdateWebhookRequest struct {
 // User maps the "response.User" schema.
 type User struct {
 	// Адрес аватарки
-	AvatarURL string `json:"avatar_url,omitempty"`
+	AvatarURL string `json:"avatar_url"`
 	// О себе
-	Bio string `json:"bio,omitempty"`
+	Bio string `json:"bio"`
 	// Дата создания учетной записи
-	CreatedAt string `json:"created_at,omitempty"`
+	CreatedAt string `json:"created_at"`
 	// Почта
-	Email string `json:"email,omitempty"`
+	Email string `json:"email"`
 	// Счетчики
-	Followers int64 `json:"followers,omitempty"`
+	Followers int64 `json:"followers"`
 	// Url для получения подписчиков пользователя
-	FollowersURL string `json:"followers_url,omitempty"`
-	Following    int64  `json:"following,omitempty"`
+	FollowersURL string `json:"followers_url"`
+	Following    int64  `json:"following"`
 	// Url для получения подписок пользователя
-	FollowingURL string `json:"following_url,omitempty"`
+	FollowingURL string `json:"following_url"`
 	// Полное имя
-	FullName string `json:"full_name,omitempty"`
+	FullName string `json:"full_name"`
 	// Адрес страницы пользователя
-	HTMLURL string `json:"html_url,omitempty"`
+	HTMLURL string `json:"html_url"`
 	// Идентификатор
-	ID int64 `json:"id,omitempty"`
+	ID int64 `json:"id"`
 	// Верифицирован?
-	IsVerified bool `json:"is_verified,omitempty"`
+	IsVerified bool `json:"is_verified"`
 	// Местоположение
-	Location string `json:"location,omitempty"`
+	Location string `json:"location"`
 	// Логин пользователя
-	Login string `json:"login,omitempty"`
+	Login string `json:"login"`
 	// Имя пользователя
-	Name string `json:"name,omitempty"`
+	Name string `json:"name"`
 	// Url для получения организаций пользователя
-	OrganizationsURL string `json:"organizations_url,omitempty"`
+	OrganizationsURL string `json:"organizations_url"`
 	// Публичные репозитории
-	PublicRepos int64 `json:"public_repos,omitempty"`
+	PublicRepos int64 `json:"public_repos"`
 	// Url для получения репозиториев пользователя
-	ReposURL string `json:"repos_url,omitempty"`
+	ReposURL string `json:"repos_url"`
 	// Есть ли права админа
-	SiteAdmin bool `json:"site_admin,omitempty"`
+	SiteAdmin bool `json:"site_admin"`
 	// Url для получения репозиториев пользователя, которые были добавлены в избранное
-	StarredURL string `json:"starred_url,omitempty"`
+	StarredURL string `json:"starred_url"`
 	// Количество репозиториев в избранном
-	StarsCount int64 `json:"stars_count,omitempty"`
+	StarsCount int64 `json:"stars_count"`
 	// Url для получения подписок пользователя
-	SubscriptionsURL string `json:"subscriptions_url,omitempty"`
+	SubscriptionsURL string `json:"subscriptions_url"`
 	// Тип пользователя
-	Type string `json:"type,omitempty"`
+	Type string `json:"type"`
 	// Дата изменения учетной записи
-	UpdatedAt string `json:"updated_at,omitempty"`
+	UpdatedAt string `json:"updated_at"`
 	// Url для получения пользователя
-	URL string `json:"url,omitempty"`
+	URL string `json:"url"`
 	// Вебсайт
-	Website string `json:"website,omitempty"`
+	Website string `json:"website"`
 }
 
 // UserPrefsArray maps the "response.UserPrefsArray" schema.
 type UserPrefsArray struct {
-	IncompleteResults bool   `json:"incomplete_results,omitempty"`
-	Items             []User `json:"items,omitempty"`
-	TotalCount        int64  `json:"total_count,omitempty"`
+	IncompleteResults bool   `json:"incomplete_results"`
+	Items             []User `json:"items"`
+	TotalCount        int64  `json:"total_count"`
 }
 
 // UserPublicInfo maps the "response.UserPublicInfo" schema.
 type UserPublicInfo struct {
-	AvatarURL        string `json:"avatar_url,omitempty"`
-	FollowersURL     string `json:"followers_url,omitempty"`
-	FollowingURL     string `json:"following_url,omitempty"`
-	HTMLURL          string `json:"html_url,omitempty"`
-	ID               int64  `json:"id,omitempty"`
-	Login            string `json:"login,omitempty"`
-	OrganizationsURL string `json:"organizations_url,omitempty"`
-	ReposURL         string `json:"repos_url,omitempty"`
-	SiteAdmin        bool   `json:"site_admin,omitempty"`
-	Type             string `json:"type,omitempty"`
-	URL              string `json:"url,omitempty"`
+	AvatarURL        string `json:"avatar_url"`
+	FollowersURL     string `json:"followers_url"`
+	FollowingURL     string `json:"following_url"`
+	HTMLURL          string `json:"html_url"`
+	ID               int64  `json:"id"`
+	Login            string `json:"login"`
+	OrganizationsURL string `json:"organizations_url"`
+	ReposURL         string `json:"repos_url"`
+	SiteAdmin        bool   `json:"site_admin"`
+	Type             string `json:"type"`
+	URL              string `json:"url"`
 }
 
 // Variable maps the "response.Variable" schema.
 type Variable struct {
-	CreatedAt string `json:"created_at,omitempty"`
-	Name      string `json:"name,omitempty"`
-	UpdatedAt string `json:"updated_at,omitempty"`
-	Value     string `json:"value,omitempty"`
+	CreatedAt string `json:"created_at"`
+	Name      string `json:"name"`
+	UpdatedAt string `json:"updated_at"`
+	Value     string `json:"value"`
 }
 
 // VariableList maps the "response.VariableList" schema.
 type VariableList struct {
-	TotalCount int64      `json:"total_count,omitempty"`
-	Variables  []Variable `json:"variables,omitempty"`
+	TotalCount int64      `json:"total_count"`
+	Variables  []Variable `json:"variables"`
 }
 
 // Webhook maps the "response.Webhook" schema.
 type Webhook struct {
-	Active             bool     `json:"active,omitempty"`
-	Config             Config   `json:"config,omitempty"`
-	CreatedAt          string   `json:"created_at,omitempty"`
-	Events             []string `json:"events,omitempty"`
-	ID                 int64    `json:"id,omitempty"`
-	LastResponseStatus string   `json:"last_response_status,omitempty"`
-	Type               string   `json:"type,omitempty"`
-	UpdatedAt          string   `json:"updated_at,omitempty"`
+	Active             bool     `json:"active"`
+	Config             Config   `json:"config"`
+	CreatedAt          string   `json:"created_at"`
+	Events             []string `json:"events"`
+	ID                 int64    `json:"id"`
+	LastResponseStatus string   `json:"last_response_status"`
+	Type               string   `json:"type"`
+	UpdatedAt          string   `json:"updated_at"`
 }
 
 // WorkflowDispatchInput maps the "response.WorkflowDispatchInput" schema.
 type WorkflowDispatchInput struct {
-	Default     string   `json:"default,omitempty"`
-	Description string   `json:"description,omitempty"`
-	Name        string   `json:"name,omitempty"`
-	Options     []string `json:"options,omitempty"`
-	Required    bool     `json:"required,omitempty"`
-	Type        string   `json:"type,omitempty"`
+	Default     string   `json:"default"`
+	Description string   `json:"description"`
+	Name        string   `json:"name"`
+	Options     []string `json:"options"`
+	Required    bool     `json:"required"`
+	Type        string   `json:"type"`
 }
 
 // WorkflowDispatchInputList maps the "response.WorkflowDispatchInputList" schema.
 type WorkflowDispatchInputList struct {
-	Inputs []WorkflowDispatchInput `json:"inputs,omitempty"`
+	Inputs []WorkflowDispatchInput `json:"inputs"`
 }
 
 // WorkflowDispatchInputs maps the "v1.workflowDispatchInputs" schema.
@@ -1318,17 +1318,17 @@ type WorkflowDispatchInputs struct {
 
 // WorkflowItem maps the "response.WorkflowItem" schema.
 type WorkflowItem struct {
-	BadgeURL string `json:"badge_url,omitempty"`
-	HTMLURL  string `json:"html_url,omitempty"`
-	Name     string `json:"name,omitempty"`
-	Path     string `json:"path,omitempty"`
-	State    string `json:"state,omitempty"`
-	URL      string `json:"url,omitempty"`
-	Workflow string `json:"workflow,omitempty"`
+	BadgeURL string `json:"badge_url"`
+	HTMLURL  string `json:"html_url"`
+	Name     string `json:"name"`
+	Path     string `json:"path"`
+	State    string `json:"state"`
+	URL      string `json:"url"`
+	Workflow string `json:"workflow"`
 }
 
 // WorkflowsResponse maps the "response.WorkflowsResponse" schema.
 type WorkflowsResponse struct {
-	TotalCount int64          `json:"total_count,omitempty"`
-	Workflows  []WorkflowItem `json:"workflows,omitempty"`
+	TotalCount int64          `json:"total_count"`
+	Workflows  []WorkflowItem `json:"workflows"`
 }

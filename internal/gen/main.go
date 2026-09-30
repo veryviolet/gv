@@ -211,8 +211,12 @@ func (g *generator) render(pkgName, specPath string) ([]byte, error) {
 			// omitted rather than sent as a zero value: PATCH endpoints treat
 			// an empty string as "clear this".
 			typeName := g.goType(name, field, isRequest && !required[p], false)
+			// omitempty belongs on requests only: it keeps unset fields out of
+			// a PATCH body. On responses it would hide meaningful zeros —
+			// download_count: 0 or merged: false would vanish from `--json`
+			// output instead of being reported.
 			tag := p
-			if !required[p] {
+			if isRequest && !required[p] {
 				tag += ",omitempty"
 			}
 			if field.Description != "" {
