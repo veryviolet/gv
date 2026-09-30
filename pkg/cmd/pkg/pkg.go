@@ -35,6 +35,7 @@ The REST API can only address a package whose name is already known, so
 
 	cmd.AddCommand(NewCmdList(f))
 	cmd.AddCommand(NewCmdVersions(f))
+	cmd.AddCommand(NewCmdPush(f))
 	cmd.AddCommand(NewCmdDelete(f))
 
 	return cmd

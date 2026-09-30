@@ -24,7 +24,28 @@ gv api /user --jq .login
 go install gitverse.ru/veryviolet/gv/cmd/gv@latest
 ```
 
-### Пакеты
+### apt — подписанный репозиторий
+
+GitVerse держит родной реестр deb-пакетов и **сам подписывает метаданные**, поэтому
+`apt` проверяет подпись обычным образом, без `trusted=yes`. Ключ отдаётся анонимно:
+
+```bash
+sudo mkdir -p /etc/apt/keyrings
+sudo curl -fsSL https://gitverse.ru/api/packages/veryviolet/debian/repository.key -o /etc/apt/keyrings/gitverse-veryviolet.asc
+echo 'deb [signed-by=/etc/apt/keyrings/gitverse-veryviolet.asc] https://gitverse.ru/api/packages/veryviolet/debian stable main' | sudo tee /etc/apt/sources.list.d/gitverse-veryviolet.list
+sudo apt update && sudo apt install gv
+```
+
+### dnf — подписанный репозиторий
+
+Файл `.repo` генерирует сам сервер, `gpgcheck` в нём уже включён:
+
+```bash
+sudo dnf config-manager --add-repo https://gitverse.ru/api/packages/veryviolet/rpm/gv.repo
+sudo dnf install gv
+```
+
+### Пакеты файлом
 
 Готовые пакеты лежат в [релизах](https://gitverse.ru/veryviolet/gv/releases).
 Собираются `deb`, `rpm` и `apk` под `amd64` и `arm64`; в них входят бинарник,
@@ -104,7 +125,7 @@ gv auth setup-git
 | `gv repo view\|list\|create\|clone\|fork\|delete` | Репозитории |
 | `gv pr list\|view\|create\|diff\|files\|commits\|checkout\|edit\|close\|reopen` | Pull request'ы |
 | `gv issue list\|view\|create\|comment\|edit\|close\|reopen` | Задачи |
-| `gv package list\|versions\|delete` | Образы и пакеты |
+| `gv package push\|list\|versions\|delete` | Пакеты и образы: публикация в реестры, просмотр, удаление |
 | `gv api` | Сырой запрос к любому из 130 эндпоинтов API |
 | `gv version`, `gv completion` | Версия и автодополнение shell |
 
@@ -135,6 +156,32 @@ gv api repos/{owner}/{repo}/actions/runs --jq '.workflow_runs // .'
 `null`, число, `@файл`, `@-` для stdin). Для GET-запросов параметры уходят в query-строку,
 иначе — в JSON-тело. `--paginate` собирает все страницы в **один** JSON-массив (в отличие
 от `gh`, который печатает страницы подряд).
+
+## Публикация пакетов
+
+У GitVerse есть родные реестры `deb`, `rpm` и `generic`, и метаданные репозиториев
+платформа подписывает сама — то есть подписанный `apt install` получается без своего
+сервера и без собственного GPG-ключа.
+
+```bash
+gv package push dist/gv_0.2.0-1_amd64.deb dist/gv_0.2.0-1_arm64.deb
+gv package push dist/*.rpm --group gv
+gv package push notes.txt --kind generic --name gv --version 0.2.0
+```
+
+После публикации команда печатает готовые строки для подключения репозитория на клиенте.
+
+Особенности, выясненные на живом API:
+
+- **Загрузка идёт как `PUT` с сырым телом.** Если отправить файл как форму
+  (`curl --data-binary -X PUT` ставит `Content-Type: application/x-www-form-urlencoded`),
+  сервер отвечает `500 internal server error` без объяснений. Правильно — `curl --upload-file`
+  или, что то же самое, `gv package push`.
+- **Аутентификация — basic `логин:токен`**, а не `Bearer`. Токену нужен уровень доступа
+  «Запись» к реестру пакетов; галочка «Репозитории» — это отдельный git-доступ.
+- **Версии неизменяемы**: повторная заливка того же имени, версии и архитектуры даёт
+  `409 package file already exists`. Сначала удалить старую версию.
+- **Лимит 500 МБ** на всё хранилище пакетов владельца.
 
 ## Контейнеры
 
