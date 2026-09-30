@@ -1,8 +1,33 @@
 <!doctype html>
 <html lang="ru">
 <meta charset="utf-8">
-<title>gv — GitVerse из командной строки</title>
+<title>gv — CLI для GitVerse, аналог gh в командной строке</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="gv — консольный клиент GitVerse по образцу gh: репозитории, pull request&#39;ы, задачи, релизы, пакеты и контейнеры из терминала. Установка через apt, dnf и go install.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://veryviolet.gitverse.site/gv/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="gv — CLI для GitVerse, аналог gh в командной строке">
+<meta property="og:description" content="gv — консольный клиент GitVerse по образцу gh: репозитории, pull request&#39;ы, задачи, релизы, пакеты и контейнеры из терминала. Установка через apt, dnf и go install.">
+<meta property="og:url" content="https://veryviolet.gitverse.site/gv/">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="gv — GitVerse CLI">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "gv — GitVerse CLI",
+  "alternateName": ["gitverse-cli", "GitVerse из командной строки"],
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Linux, macOS, Windows",
+  "softwareVersion": "0.3.1",
+  "description": "Консольный клиент GitVerse по образцу gh: репозитории, pull request'ы, задачи, релизы, пакеты и контейнеры.",
+  "url": "https://veryviolet.gitverse.site/gv/",
+  "codeRepository": "https://gitverse.ru/veryviolet/gv",
+  "programmingLanguage": "Go",
+  "license": "https://opensource.org/licenses/MIT",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "RUB"}
+}</script>
 <style>
 :root { --fg:#1a1a1a; --muted:#666; --bg:#fff; --code-bg:#f5f5f5; --line:#e3e3e3; --link:#2b5eb8; }
 @media (prefers-color-scheme: dark) {
@@ -75,13 +100,13 @@ epoch <code>1:</code>, из-за которого его версия всегд
 <a href="https://gitverse.ru/veryviolet/gv/releases">релизах</a>. В пакет входят бинарник,
 man-страницы и автодополнения для bash, zsh и fish.</p>
 <pre><code># Debian, Ubuntu, Astra
-gunzip -c gitverse-cli_0.3.1-dirty-1_amd64.deb.gz &gt; gv.deb &amp;&amp; sudo dpkg -i gv.deb
+gunzip -c gitverse-cli_0.3.1-1_amd64.deb.gz &gt; gv.deb &amp;&amp; sudo dpkg -i gv.deb
 
 # Fedora, RHEL, Alma, Rocky, РЕД ОС
-gunzip -c gitverse-cli-0.3.1-dirty-1.x86_64.rpm.gz &gt; gv.rpm &amp;&amp; sudo rpm -i gv.rpm
+gunzip -c gitverse-cli-0.3.1-1.x86_64.rpm.gz &gt; gv.rpm &amp;&amp; sudo rpm -i gv.rpm
 
 # Alpine
-sudo apk add --allow-untrusted gitverse-cli_0.3.1-dirty-r1_x86_64.apk</code></pre>
+sudo apk add --allow-untrusted gitverse-cli_0.3.1-r1_x86_64.apk</code></pre>
 
 
 <h2>Авторизация</h2>
@@ -110,7 +135,7 @@ gv repo list --template '{{range .}}{{tablerow .full_name .visibility}}{{end}}{{
 <tr><td><code>gh label</code></td><td>Метки только читаются, CRUD нет</td></tr>
 </table>
 
-<p class="muted">Документация собрана для версии <code>v0.3.1-dirty</code>.</p>
+<p class="muted">Документация собрана для версии <code>v0.3.1</code>.</p>
 
 <footer>gv — консольный клиент GitVerse. Лицензия MIT.</footer>
 </div>
