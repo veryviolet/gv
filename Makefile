@@ -14,7 +14,7 @@ PLATFORMS  := linux/amd64 linux/arm64 darwin/amd64 darwin/arm64 windows/amd64
 PKGARCHES  := amd64 arm64
 PACKAGERS  := deb rpm apk
 
-.PHONY: all build install test lint fmt vet generate docs clean cross packages tarballs checksums dist-clean release publish tidy
+.PHONY: all build install test lint fmt vet generate docs site clean cross packages tarballs checksums dist-clean release publish tidy
 
 all: build
 
@@ -45,8 +45,14 @@ tidy:
 # docs regenerates the man pages and completion scripts that the packages ship.
 docs:
 	rm -rf share
-	$(GO) run ./internal/gen/docs -out share
+	$(GO) run ./internal/gen/docs -out share -version $(VERSION)
 	gzip -9 -n share/man/man1/*.1
+
+# site regenerates the static documentation published to GitVerse Pages.
+site:
+	rm -rf site
+	$(GO) run ./internal/gen/docs -site site -version $(VERSION)
+	@ls -1 site
 
 cross:
 	@mkdir -p dist
@@ -119,4 +125,4 @@ dist-clean:
 	rm -rf dist
 
 clean: dist-clean
-	rm -rf bin share
+	rm -rf bin share site

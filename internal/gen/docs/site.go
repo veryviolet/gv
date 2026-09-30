@@ -72,6 +72,13 @@ func generateSite(root *cobra.Command, outDir, version string) error {
 }
 
 func landingPage(version string) string {
+	// The install examples name concrete files, so they follow the version
+	// the documentation is built for rather than being frozen in the source.
+	pkgVersion := strings.TrimPrefix(version, "v")
+	if pkgVersion == "" || pkgVersion == "dev" {
+		pkgVersion = "0.1.0"
+	}
+
 	var b strings.Builder
 	b.WriteString(`<h1>gv</h1>
 <p class="muted">Консольный клиент <a href="https://gitverse.ru">GitVerse</a>, устроенный по образцу
@@ -93,14 +100,17 @@ gv api /user --jq .login</code></pre>
 <p>Готовые <code>deb</code>, <code>rpm</code> и <code>apk</code> под amd64 и arm64 лежат в
 <a href="https://gitverse.ru/veryviolet/gv/releases">релизах</a>. В пакет входят бинарник,
 man-страницы и автодополнения для bash, zsh и fish.</p>
-<pre><code># Debian, Ubuntu, Astra
-gunzip -c gv_0.1.0-1_amd64.deb.gz &gt; gv.deb &amp;&amp; sudo dpkg -i gv.deb
+`)
+	fmt.Fprintf(&b, `<pre><code># Debian, Ubuntu, Astra
+gunzip -c gv_%[1]s-1_amd64.deb.gz &gt; gv.deb &amp;&amp; sudo dpkg -i gv.deb
 
 # Fedora, RHEL, Alma, Rocky, РЕД ОС
-gunzip -c gv-0.1.0-1.x86_64.rpm.gz &gt; gv.rpm &amp;&amp; sudo rpm -i gv.rpm
+gunzip -c gv-%[1]s-1.x86_64.rpm.gz &gt; gv.rpm &amp;&amp; sudo rpm -i gv.rpm
 
 # Alpine
-sudo apk add --allow-untrusted gv_0.1.0-r1_x86_64.apk</code></pre>
+sudo apk add --allow-untrusted gv_%[1]s-r1_x86_64.apk</code></pre>
+`, html.EscapeString(pkgVersion))
+	b.WriteString(`
 
 <h2>Авторизация</h2>
 <p>OAuth device flow у GitVerse нет, поэтому токен создаётся в веб-интерфейсе на странице

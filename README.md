@@ -32,13 +32,13 @@ man-страницы и автодополнения для bash, zsh и fish.
 
 ```bash
 # Debian, Ubuntu, Astra — .deb выложен сжатым, см. примечание ниже
-gunzip -c gv_0.1.0-1_amd64.deb.gz > gv.deb && sudo dpkg -i gv.deb
+gunzip -c gv_0.2.0-1_amd64.deb.gz > gv.deb && sudo dpkg -i gv.deb
 
 # Fedora, RHEL, Alma, Rocky, РЕД ОС
-gunzip -c gv-0.1.0-1.x86_64.rpm.gz > gv.rpm && sudo rpm -i gv.rpm
+gunzip -c gv-0.2.0-1.x86_64.rpm.gz > gv.rpm && sudo rpm -i gv.rpm
 
 # Alpine
-sudo apk add --allow-untrusted gv_0.1.0-r1_x86_64.apk
+sudo apk add --allow-untrusted gv_0.2.0-r1_x86_64.apk
 ```
 
 > **Почему `.deb.gz`, а не `.deb`.** GitVerse проверяет содержимое файла,
@@ -51,8 +51,8 @@ sudo apk add --allow-untrusted gv_0.1.0-r1_x86_64.apk
 Для остальных систем — архив с бинарником, man-страницами и автодополнениями:
 
 ```bash
-tar xzf gv_0.1.0_linux_amd64.tar.gz
-sudo install -m755 gv_0.1.0_linux_amd64/bin/gv /usr/local/bin/gv
+tar xzf gv_0.2.0_linux_amd64.tar.gz
+sudo install -m755 gv_0.2.0_linux_amd64/bin/gv /usr/local/bin/gv
 ```
 
 Контрольные суммы всех артефактов — в `SHA256SUMS.gz` рядом с ними.
@@ -143,8 +143,8 @@ gv api repos/{owner}/{repo}/actions/runs --jq '.workflow_runs // .'
 
 ```bash
 gv auth docker-login                  # docker login gitverse.ru токеном из конфига gv
-docker build -t gitverse.ru/veryviolet/gv:0.1.0 .
-docker push gitverse.ru/veryviolet/gv:0.1.0
+docker build -t gitverse.ru/veryviolet/gv:0.2.0 .
+docker push gitverse.ru/veryviolet/gv:0.2.0
 ```
 
 ```bash

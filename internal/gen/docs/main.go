@@ -20,6 +20,9 @@ import (
 func main() {
 	outDir := flag.String("out", "share", "directory to write the generated files into")
 	siteDir := flag.String("site", "", "generate the static documentation site into this directory instead")
+	// `go run` builds without the linker flags that stamp the version, so the
+	// Makefile passes it explicitly.
+	version := flag.String("version", build.Version, "version to document")
 	flag.Parse()
 
 	f := cmdutil.NewFactory()
@@ -27,7 +30,7 @@ func main() {
 	rootCmd.DisableAutoGenTag = true
 
 	if *siteDir != "" {
-		if err := generateSite(rootCmd, *siteDir, build.Version); err != nil {
+		if err := generateSite(rootCmd, *siteDir, *version); err != nil {
 			fail(err)
 		}
 		fmt.Fprintf(os.Stderr, "wrote the documentation site to %s\n", *siteDir)
@@ -41,7 +44,7 @@ func main() {
 	header := &doc.GenManHeader{
 		Title:   "GV",
 		Section: "1",
-		Source:  "gv " + build.Version,
+		Source:  "gv " + *version,
 		Manual:  "gv manual",
 	}
 	if err := doc.GenManTree(rootCmd, header, manDir); err != nil {
