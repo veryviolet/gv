@@ -3,7 +3,12 @@
 #   ARCH=amd64 VERSION=0.1.0 nfpm package -p deb -f nfpm.yaml -t dist/
 #
 # The Makefile drives it for every packager and architecture; see `make packages`.
-name: gv
+# The package is NOT called "gv": Debian and Ubuntu have shipped a package by
+# that name for years — GNU gv, the PostScript viewer — and it carries an epoch
+# (1:3.7.4), so its version always outranks ours and `apt install gv` would
+# quietly install the viewer instead. The binary keeps the name gv; only the
+# package is renamed.
+name: gitverse-cli
 arch: ${ARCH}
 platform: linux
 version: ${VERSION}
@@ -59,6 +64,12 @@ contents:
 # it is a recommendation rather than a hard dependency.
 recommends:
   - git
+
+# Both packages own /usr/bin/gv, so they cannot be installed side by side.
+# Declaring the conflict makes the package manager say so up front instead of
+# failing half-way through unpacking.
+conflicts:
+  - gv
 
 deb:
   fields:

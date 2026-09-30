@@ -24,6 +24,13 @@ gv api /user --jq .login
 go install gitverse.ru/veryviolet/gv/cmd/gv@latest
 ```
 
+> **Пакет называется `gitverse-cli`, команда — `gv`.** Имя `gv` в Debian и Ubuntu
+> много лет занято просмотрщиком PostScript (GNU gv), причём с epoch `1:`, из-за
+> которого его версия всегда старше нашей: `apt install gv` поставил бы просмотрщик,
+> а не этот клиент. Оба пакета владеют `/usr/bin/gv`, поэтому у нашего объявлен
+> `Conflicts: gv` — менеджер скажет об этом сразу, а не сломает чужой файл на
+> середине установки.
+
 ### apt — подписанный репозиторий
 
 GitVerse держит родной реестр deb-пакетов и **сам подписывает метаданные**, поэтому
@@ -33,7 +40,7 @@ GitVerse держит родной реестр deb-пакетов и **сам �
 sudo mkdir -p /etc/apt/keyrings
 sudo curl -fsSL https://gitverse.ru/api/packages/veryviolet/debian/repository.key -o /etc/apt/keyrings/gitverse-veryviolet.asc
 echo 'deb [signed-by=/etc/apt/keyrings/gitverse-veryviolet.asc] https://gitverse.ru/api/packages/veryviolet/debian stable main' | sudo tee /etc/apt/sources.list.d/gitverse-veryviolet.list
-sudo apt update && sudo apt install gv
+sudo apt update && sudo apt install gitverse-cli
 ```
 
 ### dnf — подписанный репозиторий
@@ -42,7 +49,7 @@ sudo apt update && sudo apt install gv
 
 ```bash
 sudo dnf config-manager --add-repo https://gitverse.ru/api/packages/veryviolet/rpm/gv.repo
-sudo dnf install gv
+sudo dnf install gitverse-cli
 ```
 
 ### Пакеты файлом
@@ -53,13 +60,13 @@ man-страницы и автодополнения для bash, zsh и fish.
 
 ```bash
 # Debian, Ubuntu, Astra — .deb выложен сжатым, см. примечание ниже
-gunzip -c gv_0.2.0-1_amd64.deb.gz > gv.deb && sudo dpkg -i gv.deb
+gunzip -c gitverse-cli_0.3.1-1_amd64.deb.gz > gv.deb && sudo dpkg -i gv.deb
 
 # Fedora, RHEL, Alma, Rocky, РЕД ОС
-gunzip -c gv-0.2.0-1.x86_64.rpm.gz > gv.rpm && sudo rpm -i gv.rpm
+gunzip -c gitverse-cli-0.3.1-1.x86_64.rpm.gz > gv.rpm && sudo rpm -i gv.rpm
 
 # Alpine
-sudo apk add --allow-untrusted gv_0.2.0-r1_x86_64.apk
+sudo apk add --allow-untrusted gitverse-cli_0.3.1-r1_x86_64.apk
 ```
 
 > **Почему `.deb.gz`, а не `.deb`.** GitVerse проверяет содержимое файла,
@@ -72,8 +79,8 @@ sudo apk add --allow-untrusted gv_0.2.0-r1_x86_64.apk
 Для остальных систем — архив с бинарником, man-страницами и автодополнениями:
 
 ```bash
-tar xzf gv_0.2.0_linux_amd64.tar.gz
-sudo install -m755 gv_0.2.0_linux_amd64/bin/gv /usr/local/bin/gv
+tar xzf gv_0.3.1_linux_amd64.tar.gz
+sudo install -m755 gv_0.3.1_linux_amd64/bin/gv /usr/local/bin/gv
 ```
 
 Контрольные суммы всех артефактов — в `SHA256SUMS.gz` рядом с ними.
