@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
@@ -43,21 +44,80 @@ th { font-weight:600; }
 footer { margin-top:4rem; padding-top:1rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; }
 `
 
+// siteBaseURL is where the published documentation lives. Canonical links and
+// the sitemap need absolute URLs, and relative ones would be wrong for both.
+const siteBaseURL = "https://veryviolet.gitverse.site/gv"
+
+// page describes one generated page.
+type page struct {
+	file        string
+	title       string
+	description string
+	body        string
+	// jsonLD is optional structured data for search engines.
+	jsonLD string
+}
+
 // writePage wraps body in the shared HTML skeleton.
-func writePage(path, title, body string) error {
+//
+// Nobody searches for "gv" — two letters find nothing — so the title and the
+// description carry the phrases people actually type: GitVerse, CLI, аналог gh.
+func writePage(outDir string, p page) error {
+	canonical := siteBaseURL + "/"
+	if p.file != "index.html" {
+		canonical += p.file
+	}
+
 	var b strings.Builder
 	b.WriteString("<!doctype html>\n<html lang=\"ru\">\n<meta charset=\"utf-8\">\n")
-	fmt.Fprintf(&b, "<title>%s</title>\n", html.EscapeString(title))
+	fmt.Fprintf(&b, "<title>%s</title>\n", html.EscapeString(p.title))
 	b.WriteString("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n")
+	fmt.Fprintf(&b, "<meta name=\"description\" content=\"%s\">\n", html.EscapeString(p.description))
+	b.WriteString("<meta name=\"robots\" content=\"index, follow\">\n")
+	fmt.Fprintf(&b, "<link rel=\"canonical\" href=\"%s\">\n", html.EscapeString(canonical))
+
+	// Open Graph, so links shared in chats and posts render with a title and
+	// a summary instead of a bare URL.
+	fmt.Fprintf(&b, "<meta property=\"og:type\" content=\"website\">\n")
+	fmt.Fprintf(&b, "<meta property=\"og:title\" content=\"%s\">\n", html.EscapeString(p.title))
+	fmt.Fprintf(&b, "<meta property=\"og:description\" content=\"%s\">\n", html.EscapeString(p.description))
+	fmt.Fprintf(&b, "<meta property=\"og:url\" content=\"%s\">\n", html.EscapeString(canonical))
+	fmt.Fprintf(&b, "<meta property=\"og:locale\" content=\"ru_RU\">\n")
+	fmt.Fprintf(&b, "<meta property=\"og:site_name\" content=\"gv — GitVerse CLI\">\n")
+	fmt.Fprintf(&b, "<meta name=\"twitter:card\" content=\"summary\">\n")
+
+	if p.jsonLD != "" {
+		fmt.Fprintf(&b, "<script type=\"application/ld+json\">%s</script>\n", p.jsonLD)
+	}
+
 	fmt.Fprintf(&b, "<style>%s</style>\n", siteCSS)
 	b.WriteString("<body>\n<div class=\"wrap\">\n")
 	b.WriteString(`<header><nav><a href="./">gv</a><a href="commands.html">Команды</a>` +
 		`<a href="https://gitverse.ru/veryviolet/gv">Исходники</a>` +
 		`<a href="https://gitverse.ru/veryviolet/gv/releases">Релизы</a></nav></header>` + "\n")
-	b.WriteString(body)
+	b.WriteString(p.body)
 	b.WriteString("\n<footer>gv — консольный клиент GitVerse. Лицензия MIT.</footer>\n")
 	b.WriteString("</div>\n")
-	return os.WriteFile(path, []byte(b.String()), 0o644)
+	return os.WriteFile(filepath.Join(outDir, p.file), []byte(b.String()), 0o644)
+}
+
+// softwareJSONLD describes the tool for search engines in machine-readable form.
+func softwareJSONLD(version string) string {
+	return fmt.Sprintf(`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "gv — GitVerse CLI",
+  "alternateName": ["gitverse-cli", "GitVerse из командной строки"],
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Linux, macOS, Windows",
+  "softwareVersion": %q,
+  "description": "Консольный клиент GitVerse по образцу gh: репозитории, pull request'ы, задачи, релизы, пакеты и контейнеры.",
+  "url": %q,
+  "codeRepository": "https://gitverse.ru/veryviolet/gv",
+  "programmingLanguage": "Go",
+  "license": "https://opensource.org/licenses/MIT",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "RUB"}
+}`, strings.TrimPrefix(version, "v"), siteBaseURL+"/")
 }
 
 // generateSite renders a static documentation site from the command tree.
@@ -65,10 +125,57 @@ func generateSite(root *cobra.Command, outDir, version string) error {
 	if err := os.MkdirAll(outDir, 0o755); err != nil {
 		return err
 	}
-	if err := writePage(filepath.Join(outDir, "index.html"), "gv — GitVerse из командной строки", landingPage(version)); err != nil {
-		return err
+
+	pages := []page{
+		{
+			file:  "index.html",
+			title: "gv — CLI для GitVerse, аналог gh в командной строке",
+			description: "gv — консольный клиент GitVerse по образцу gh: репозитории, pull request'ы, " +
+				"задачи, релизы, пакеты и контейнеры из терминала. Установка через apt, dnf и go install.",
+			body:   landingPage(version),
+			jsonLD: softwareJSONLD(version),
+		},
+		{
+			file:  "commands.html",
+			title: "Справочник команд gv — GitVerse CLI",
+			description: "Полный справочник команд gv: auth, repo, pr, issue, release, package и api — " +
+				"флаги, примеры и описания для клиента GitVerse.",
+			body: commandsPage(root),
+		},
 	}
-	return writePage(filepath.Join(outDir, "commands.html"), "gv — справочник команд", commandsPage(root))
+
+	for _, p := range pages {
+		if err := writePage(outDir, p); err != nil {
+			return err
+		}
+	}
+	return writeSitemap(outDir, pages)
+}
+
+// writeSitemap lists the pages for search engines. The file can be submitted
+// to Яндекс.Вебмастер and Google Search Console by hand; robots.txt would have
+// to live at the domain root, which a project site does not own.
+func writeSitemap(outDir string, pages []page) error {
+	today := time.Now().Format("2006-01-02")
+
+	var b strings.Builder
+	b.WriteString(`<?xml version="1.0" encoding="UTF-8"?>` + "\n")
+	b.WriteString(`<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">` + "\n")
+	for _, p := range pages {
+		loc := siteBaseURL + "/"
+		if p.file != "index.html" {
+			loc += p.file
+		}
+		priority := "0.8"
+		if p.file == "index.html" {
+			priority = "1.0"
+		}
+		fmt.Fprintf(&b, "  <url><loc>%s</loc><lastmod>%s</lastmod><changefreq>weekly</changefreq><priority>%s</priority></url>\n",
+			html.EscapeString(loc), today, priority)
+	}
+	b.WriteString("</urlset>\n")
+
+	return os.WriteFile(filepath.Join(outDir, "sitemap.xml"), []byte(b.String()), 0o644)
 }
 
 func landingPage(version string) string {
