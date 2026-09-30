@@ -14,7 +14,7 @@ PLATFORMS  := linux/amd64 linux/arm64 darwin/amd64 darwin/arm64 windows/amd64
 PKGARCHES  := amd64 arm64
 PACKAGERS  := deb rpm apk
 
-.PHONY: all build install test lint fmt vet generate docs site clean cross packages tarballs checksums dist-clean release publish tidy
+.PHONY: all build install test lint fmt vet generate docs site clean cross packages tarballs checksums dist-clean release publish mirror tidy
 
 all: build
 
@@ -120,6 +120,14 @@ publish: release
 # release builds everything that gets attached to a GitVerse release.
 release: dist-clean packages tarballs checksums
 	@ls -1 dist
+
+# mirror keeps the GitHub copy in step with GitVerse. GitVerse stays the
+# origin; the mirror exists so the project is findable where people search.
+mirror:
+	git push origin main --tags
+	git push github main --tags
+	git push origin pages
+	git push github pages
 
 dist-clean:
 	rm -rf dist
