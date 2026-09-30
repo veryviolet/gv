@@ -39,6 +39,7 @@ footer { margin-top:4rem; padding-top:1rem; border-top:1px solid var(--line); co
 <ul class="toc">
 <li><a href="#gv-api"><code>gv api</code></a></li>
 <li><a href="#gv-auth"><code>gv auth</code></a></li>
+<li><a href="#gv-auth-docker-login"><code>gv auth docker-login</code></a></li>
 <li><a href="#gv-auth-login"><code>gv auth login</code></a></li>
 <li><a href="#gv-auth-logout"><code>gv auth logout</code></a></li>
 <li><a href="#gv-auth-setup-git"><code>gv auth setup-git</code></a></li>
@@ -52,6 +53,10 @@ footer { margin-top:4rem; padding-top:1rem; border-top:1px solid var(--line); co
 <li><a href="#gv-issue-list"><code>gv issue list</code></a></li>
 <li><a href="#gv-issue-reopen"><code>gv issue reopen</code></a></li>
 <li><a href="#gv-issue-view"><code>gv issue view</code></a></li>
+<li><a href="#gv-package"><code>gv package</code></a></li>
+<li><a href="#gv-package-delete"><code>gv package delete</code></a></li>
+<li><a href="#gv-package-list"><code>gv package list</code></a></li>
+<li><a href="#gv-package-versions"><code>gv package versions</code></a></li>
 <li><a href="#gv-pr"><code>gv pr</code></a></li>
 <li><a href="#gv-pr-checkout"><code>gv pr checkout</code></a></li>
 <li><a href="#gv-pr-close"><code>gv pr close</code></a></li>
@@ -151,6 +156,27 @@ token you paste in `$GV_CONFIG_DIR/hosts.yml` with 0600 permissions.
 The environment variables GV_TOKEN and GITVERSE_TOKEN take precedence over the
 stored credential and are never written to disk.</p>
 <pre><code>gv auth &lt;command&gt;</code></pre>
+</div>
+
+<div class="cmd" id="gv-auth-docker-login">
+<h2><code>gv auth docker-login</code></h2>
+<p>Log the container engine in to the GitVerse registry</p>
+<p>Authenticate docker or podman against the GitVerse container registry
+using the token gv already holds.</p>
+<p>The registry lives on the same host as the repositories, so images are named
+`&lt;host&gt;/&lt;owner&gt;/&lt;image&gt;`. The token is passed to the engine on standard
+input and never appears in the process list or the shell history.</p>
+<pre><code>gv auth docker-login [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>--engine &lt;string&gt;</code></td><td>Container engine to use: {docker|podman|nerdctl}</td></tr>
+<tr><td><code>-h, --hostname &lt;string&gt;</code></td><td>The GitVerse host whose registry to log in to</td></tr>
+<tr><td><code>--verify</code></td><td>Check the token against the registry before logging in</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv auth docker-login
+  $ gv auth docker-login --engine podman</code></pre>
 </div>
 
 <div class="cmd" id="gv-auth-login">
@@ -378,6 +404,84 @@ existing sets rather than adding to them, because the API takes whole lists.</p>
 <h3>Примеры</h3>
 <pre><code>$ gv issue view 12
   $ gv issue view 12 --comments</code></pre>
+</div>
+
+<div class="cmd" id="gv-package">
+<h2><code>gv package</code></h2>
+<p>Work with packages and container images</p>
+<p>List and delete packages published to GitVerse.</p>
+<p>Container images live in the registry on the same host as the repositories:
+an image is named `gitverse.ru/&lt;owner&gt;/&lt;image&gt;` and `docker login gitverse.ru`
+takes the same token gv uses — see `gv auth docker-login`.</p>
+<p>The REST API can only address a package whose name is already known, so
+`gv package list` reads the registry catalogue instead.</p>
+<pre><code>gv package &lt;command&gt;</code></pre>
+</div>
+
+<div class="cmd" id="gv-package-delete">
+<h2><code>gv package delete</code></h2>
+<p>Delete a package or one of its versions</p>
+<p>Delete a whole package, or a single version with --version.</p>
+<p>This cannot be undone: an image deleted from the registry is gone, and anyone
+pulling that tag will start getting errors.</p>
+<pre><code>gv package delete [&lt;owner&gt;/]&lt;package&gt; [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>--org</code></td><td>The owner is an organization</td></tr>
+<tr><td><code>--type &lt;type&gt;</code></td><td>Package type: {container|generic|debian|rpm|maven|npm|pypi|helm|nuget|go}</td></tr>
+<tr><td><code>--version &lt;id&gt;</code></td><td>Delete only this version id</td></tr>
+<tr><td><code>--yes</code></td><td>Skip the confirmation prompt</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv package delete gv --version 42
+  $ gv package delete veryviolet/gv --yes</code></pre>
+</div>
+
+<div class="cmd" id="gv-package-list">
+<h2><code>gv package list</code></h2>
+<p>List container images of an owner</p>
+<p>List the registry repositories belonging to an owner.</p>
+<p>The REST API cannot enumerate packages, so this reads the registry catalogue,
+which is shared by the whole platform and sorted by name: gv starts at the
+owner&#39;s prefix rather than walking the catalogue from the beginning.</p>
+<pre><code>gv package list [&lt;owner&gt;] [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-q, --jq &lt;expression&gt;</code></td><td>Filter the JSON output with a jq expression</td></tr>
+<tr><td><code>--json</code></td><td>Output the packages as JSON</td></tr>
+<tr><td><code>-L, --limit &lt;int&gt;</code></td><td>Maximum number of packages to list</td></tr>
+<tr><td><code>--tags</code></td><td>Also fetch the tags of each image</td></tr>
+<tr><td><code>-t, --template &lt;template&gt;</code></td><td>Format the JSON output with a Go template</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv package list
+  $ gv package list veryviolet --tags</code></pre>
+</div>
+
+<div class="cmd" id="gv-package-versions">
+<h2><code>gv package versions</code></h2>
+<p>List the versions of a package</p>
+<p>List the published versions of one package.</p>
+<p>For container images the version name is the tag. Pass --org when the package
+belongs to an organization: users and organizations live under different API
+paths and gv cannot tell them apart from the name alone.</p>
+<pre><code>gv package versions [&lt;owner&gt;/]&lt;package&gt; [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>-q, --jq &lt;expression&gt;</code></td><td>Filter the JSON output with a jq expression</td></tr>
+<tr><td><code>--json</code></td><td>Output the versions as JSON</td></tr>
+<tr><td><code>-L, --limit &lt;int&gt;</code></td><td>Maximum number of versions to list</td></tr>
+<tr><td><code>--org</code></td><td>The owner is an organization</td></tr>
+<tr><td><code>-t, --template &lt;template&gt;</code></td><td>Format the JSON output with a Go template</td></tr>
+<tr><td><code>--type &lt;type&gt;</code></td><td>Package type: {container|generic|debian|rpm|maven|npm|pypi|helm|nuget|go}</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv package versions gv
+  $ gv package versions veryviolet/gv
+  $ gv package versions myorg/service --org</code></pre>
 </div>
 
 <div class="cmd" id="gv-pr">
