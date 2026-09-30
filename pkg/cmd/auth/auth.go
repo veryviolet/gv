@@ -25,6 +25,7 @@ stored credential and are never written to disk.`,
 	cmd.AddCommand(NewCmdStatus(f))
 	cmd.AddCommand(NewCmdToken(f))
 	cmd.AddCommand(NewCmdSetupGit(f))
+	cmd.AddCommand(NewCmdDockerLogin(f))
 	cmd.AddCommand(NewCmdGitCredential(f))
 
 	return cmd

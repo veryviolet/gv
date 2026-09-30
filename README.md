@@ -104,6 +104,7 @@ gv auth setup-git
 | `gv repo view\|list\|create\|clone\|fork\|delete` | Репозитории |
 | `gv pr list\|view\|create\|diff\|files\|commits\|checkout\|edit\|close\|reopen` | Pull request'ы |
 | `gv issue list\|view\|create\|comment\|edit\|close\|reopen` | Задачи |
+| `gv package list\|versions\|delete` | Образы и пакеты |
 | `gv api` | Сырой запрос к любому из 130 эндпоинтов API |
 | `gv version`, `gv completion` | Версия и автодополнение shell |
 
@@ -134,6 +135,36 @@ gv api repos/{owner}/{repo}/actions/runs --jq '.workflow_runs // .'
 `null`, число, `@файл`, `@-` для stdin). Для GET-запросов параметры уходят в query-строку,
 иначе — в JSON-тело. `--paginate` собирает все страницы в **один** JSON-массив (в отличие
 от `gh`, который печатает страницы подряд).
+
+## Контейнеры
+
+Реестр образов у GitVerse живёт на том же домене, что и репозитории — отдельного хоста
+вроде `ghcr.io` нет. Говорит по OCI Distribution v2 и принимает тот же личный токен:
+
+```bash
+gv auth docker-login                  # docker login gitverse.ru токеном из конфига gv
+docker build -t gitverse.ru/veryviolet/gv:0.1.0 .
+docker push gitverse.ru/veryviolet/gv:0.1.0
+```
+
+```bash
+gv package list                       # свои образы
+gv package list veryviolet --tags     # с тегами
+gv package versions gv                # версии пакета
+gv package delete gv --version 42     # удалить одну версию
+```
+
+Две особенности, выясненные на живом API:
+
+- Тип пакета для образов — **`container`**, не `docker`: последнее API отклоняет как
+  невалидное. Ещё принимаются `generic`, `debian`, `rpm`, `maven`, `npm`, `pypi`,
+  `helm`, `nuget`, `go`.
+- Эндпоинта «перечислить пакеты» в API нет — имя нужно знать заранее. Поэтому
+  `gv package list` читает каталог реестра, который общий для всей платформы и
+  отсортирован по имени: gv стартует сразу с префикса владельца, а не листает всё
+  подряд.
+
+Теги в реестре регистронезависимы: `image:Tag` и `image:tag` — одно и то же.
 
 ## Чего нет — и почему
 

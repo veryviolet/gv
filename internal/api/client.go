@@ -119,6 +119,9 @@ func NewClientForHost(host, token, userAgent string) (*Client, error) {
 	return NewClient(opts)
 }
 
+// envRegistryURL returns the GV_REGISTRY_URL override, used by tests.
+func envRegistryURL() string { return os.Getenv("GV_REGISTRY_URL") }
+
 // EndpointForHost reports the API base URL gv will actually use for host,
 // taking the GV_API_URL override into account.
 func EndpointForHost(host string) string {

@@ -58,6 +58,23 @@ func newHTTPError(resp *http.Response, body []byte) *HTTPError {
 		e.RequestURL = resp.Request.URL.String()
 	}
 
+	// GitVerse wraps validation failures in {"error": {...}}, while other
+	// responses put the text at the top level; accept both shapes.
+	var nested struct {
+		Error struct {
+			Code    string `json:"code"`
+			Message string `json:"message"`
+			Status  int    `json:"status"`
+		} `json:"error"`
+	}
+	if json.Unmarshal(body, &nested) == nil && nested.Error.Message != "" {
+		e.Message = nested.Error.Message
+		if nested.Error.Code != "" {
+			e.Message = nested.Error.Code + ": " + e.Message
+		}
+		return e
+	}
+
 	var envelope struct {
 		Message string `json:"message"`
 		Error   string `json:"error"`

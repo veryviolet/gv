@@ -19,11 +19,20 @@ import (
 
 func main() {
 	outDir := flag.String("out", "share", "directory to write the generated files into")
+	siteDir := flag.String("site", "", "generate the static documentation site into this directory instead")
 	flag.Parse()
 
 	f := cmdutil.NewFactory()
 	rootCmd := root.NewCmdRoot(f)
 	rootCmd.DisableAutoGenTag = true
+
+	if *siteDir != "" {
+		if err := generateSite(rootCmd, *siteDir, build.Version); err != nil {
+			fail(err)
+		}
+		fmt.Fprintf(os.Stderr, "wrote the documentation site to %s\n", *siteDir)
+		return
+	}
 
 	manDir := filepath.Join(*outDir, "man", "man1")
 	if err := os.MkdirAll(manDir, 0o755); err != nil {
