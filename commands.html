@@ -56,6 +56,7 @@ footer { margin-top:4rem; padding-top:1rem; border-top:1px solid var(--line); co
 <li><a href="#gv-package"><code>gv package</code></a></li>
 <li><a href="#gv-package-delete"><code>gv package delete</code></a></li>
 <li><a href="#gv-package-list"><code>gv package list</code></a></li>
+<li><a href="#gv-package-push"><code>gv package push</code></a></li>
 <li><a href="#gv-package-versions"><code>gv package versions</code></a></li>
 <li><a href="#gv-pr"><code>gv pr</code></a></li>
 <li><a href="#gv-pr-checkout"><code>gv pr checkout</code></a></li>
@@ -458,6 +459,33 @@ owner&#39;s prefix rather than walking the catalogue from the beginning.</p>
 <h3>Примеры</h3>
 <pre><code>$ gv package list
   $ gv package list veryviolet --tags</code></pre>
+</div>
+
+<div class="cmd" id="gv-package-push">
+<h2><code>gv package push</code></h2>
+<p>Publish packages to the GitVerse registries</p>
+<p>Upload .deb, .rpm or arbitrary files to the package registries.</p>
+<p>The registry signs the repository metadata itself, so clients verify the
+packages against a published key — unlike a plain file share. The kind is
+guessed from the extension and can be forced with --kind.</p>
+<p>Files are immutable: republishing the same name, version and architecture
+fails until the existing version is deleted.</p>
+<pre><code>gv package push &lt;file&gt;... [flags]</code></pre>
+<h3>Флаги</h3>
+<table>
+<tr><th>Флаг</th><th>Описание</th></tr>
+<tr><td><code>--component &lt;component&gt;</code></td><td>Debian component</td></tr>
+<tr><td><code>--distribution &lt;distribution&gt;</code></td><td>Debian distribution</td></tr>
+<tr><td><code>--group &lt;group&gt;</code></td><td>RPM group; empty publishes to the owner-wide repository</td></tr>
+<tr><td><code>--kind &lt;string&gt;</code></td><td>Registry to use: {deb|rpm|generic} (guessed from the extension)</td></tr>
+<tr><td><code>--name &lt;name&gt;</code></td><td>Generic package name</td></tr>
+<tr><td><code>--owner &lt;owner&gt;</code></td><td>Publish under this owner instead of the authenticated user</td></tr>
+<tr><td><code>--version &lt;version&gt;</code></td><td>Generic package version</td></tr>
+</table>
+<h3>Примеры</h3>
+<pre><code>$ gv package push dist/gv_0.2.0-1_amd64.deb
+  $ gv package push dist/*.rpm --group gv
+  $ gv package push notes.txt --kind generic --name gv --version 0.2.0</code></pre>
 </div>
 
 <div class="cmd" id="gv-package-versions">
